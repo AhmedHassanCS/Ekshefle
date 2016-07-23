@@ -1,3 +1,7 @@
+<?php
+include('session.php');
+?>
+
 <html>
    
    <head>
@@ -5,8 +9,9 @@
    </head>
    
    <body>
-      <h1>Welcome <?php echo session_start(); $_SESSION['login_user']; ?></h1> 
+      <h1>Welcome <?php echo $_SESSION['login_user']; ?></h1> 
       <h2><a href = "logout.php">Sign Out</a></h2>
+
    </body>
    
 </html>
