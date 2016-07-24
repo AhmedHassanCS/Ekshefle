@@ -1,5 +1,5 @@
 <?php
-$contracts_query="SELECT d.doc_fname, d.doc_sname ,d.doc_lname, d.doc_email, c.contract_code, c.exp_date, c.start_date, c.med_type
+$contracts_query="SELECT d.doc_fname, d.doc_sname ,d.doc_lname, d.doc_email, c.cont_code, c.exp_date, c.start_date, c.med_type
 			  		FROM doctor as d, contract as c
               		where d.doc_id=c.doc_id
               		and c.is_expired=0";
@@ -12,7 +12,7 @@ $doctors_query= "SELECT d.doc_fname, d.doc_sname ,d.doc_lname, d.doc_email, d.do
 
 					$doctors=$db->query($doctors_query);
 
-$clinics_query="SELECT m.med_id, m.med_name, ph.phone, addr.detailed, d.doc_email, d.doc_fname, d.doc_sname ,m.is_active
+$clinics_query="SELECT m.med_id, m.med_name, ph.phone, addr.detailed_add, d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname ,m.is_active
 				from medical as m, doctor as d, phone as ph, address as addr
 				where m.med_type='Clinic'
 				and m.med_id=ph.med_id
@@ -21,7 +21,7 @@ $clinics_query="SELECT m.med_id, m.med_name, ph.phone, addr.detailed, d.doc_emai
 
 				$clinics=$db->query($clinics_query);
 
-$hospital_query="SELECT m.med_id, m.med_name, ph.phone, addr.detailed, d.doc_email, d.doc_fname, d.doc_sname ,m.is_active
+$hospital_query="SELECT m.med_id, m.med_name, ph.phone, addr.detailed_add, d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname ,m.is_active
 				from medical as m, doctor as d, phone as ph, address as addr
 				where m.med_type='Hospital'
 				and m.med_id=ph.med_id
@@ -30,10 +30,9 @@ $hospital_query="SELECT m.med_id, m.med_name, ph.phone, addr.detailed, d.doc_ema
 				
 				$hospitals=$db->query($hospital_query);
 
-$lap_query="SELECT m.med_id, m.med_name, ph.phone, addr.detailed, d.doc_email, d.doc_fname, d.doc_sname ,m.is_active
+$lap_query="SELECT m.med_id, m.med_name, ph.phone, addr.detailed_add, d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname,m.is_active
 				from medical as m, doctor as d, phone as ph, address as addr
-				where m.med_type='Lap'
-				and m.med_id=ph.med_id
+				where  m.med_id=ph.med_id
 				and m.med_id=addr.med_id
 				and d.doc_id=m.doc_id";
 				
@@ -52,8 +51,4 @@ $pateints_query="SELECT * from patient";
 
 				$patients=$db->query($pateints_query);
 
-
-//while($row = $patients->fetch_assoc()) {
-//echo $row["nat_id"]."<br />".$row["pat_name"]."<br />".$row["med_id"]."<br />".$row["med_type"]."<br />".$row["time_date"]."<br />";
-//}
 ?>

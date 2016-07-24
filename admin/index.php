@@ -3,9 +3,6 @@ include('session.php');
 ?>
 
 <?php
-//$requests_num =2;
-//$appointments_num =0;
-//$expirations_num =0;
 include('notifications.php');
 include('main_tables.php');
 ?>
@@ -102,7 +99,7 @@ desired effect
                 	<?php 
                   while($row = $requests->fetch_assoc()) 
                   {
-                    echo '<li> <a href="#"> <h4> Doctor '
+                    echo '<li> <a onclick="req_click('."'".$row['doc_email']."'".');" href="#tab_requests" data-toggle="tab"> <h4> Doctor '
                     .$row['doc_fname'].' '.$row['doc_sname'].' '.$row['doc_lname'].'</h4>'
                     .'<p>Wants to publish his '.$row['med_type'].'s</p></a></li>';
                   }
@@ -129,12 +126,12 @@ desired effect
               <?php 
                   while($row = $expirations->fetch_assoc()) 
                   {
-                    echo '<li> <a href="#"> <h4> Doctor '
+                    echo '<li> <a onclick="exp_click('."'".$row['doc_email']."'".');" href="#tab_expired" data-toggle="tab"> <h4> Doctor '
                     .$row['doc_fname'].' '.$row['doc_sname'].' '.$row['doc_lname'].'</h4>'
                     .$row['med_type'].'s contract '.$row['contract_code'].' expired</p></a></li>';
                   }
               ?>
-              <li class="footer"><a href="#">View all timed out</a></li> 
+              <li class="footer"><a href="#tab_expired" data-toggle="tab">View all timed out</a></li> 
             </ul>
           </li>
           <!-- Tasks Menu -->
@@ -152,8 +149,8 @@ desired effect
                   <?php 
                   while($row = $appointments->fetch_assoc()) 
                   {
-                    echo '<li> <a href="#"> <h4>'.$row['pat_name'].'</h4>'
-                    .'<p>Appointment in Dr. '.$row['doc_fname'].' '.$row['doc_sname']."'s ".$row['med_type'].'</p></a></li>';
+                    echo '<li> <a onclick="app_click('."'".$row['nat_id']."'".');" href="#tab_appointments" data-toggle="tab"> <h5>'.$row['pat_name'].'</h5>'
+                    .'<p><small>Appointment in Dr. '.$row['doc_fname'].' '.$row['doc_sname']."'s ".$row['med_type'].'</small></p></a></li>';
                   }
                   ?>
                   <!-- end task item -->
@@ -235,6 +232,7 @@ desired effect
           <ul class="treeview-menu">
             <li><a href="#tab_requests" data-toggle="tab">Pending publishing requests</a></li>
             <li><a href="#tab_contracts" data-toggle="tab">Running contracts</a></li>
+            <li><a href="#tab_expired" data-toggle="tab">Expired contracts</a></li>
             <li><a href="#tab_doctors" data-toggle="tab">All doctors</a></li>
 
           </ul>
@@ -344,6 +342,7 @@ desired effect
                          </table>
                        </div>
                      </div>
+                     <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="request_reset();"/>
                   </div>
 
           <!--_________________Contracts Tab Starts____________________-->
@@ -394,7 +393,7 @@ desired effect
                             <?php 
                                   while($row = $contracts->fetch_assoc()) {
                                       echo "<tr>
-                                            <td>".$row["contract_code"]."</td>
+                                            <td>".$row["cont_code"]."</td>
                                             <td>".$row["doc_email"]."</td>
                                             <td>".$row["doc_fname"].' '.$row["doc_sname"].' '.$row["doc_lname"]."</td>
                                             <td>".$row["med_type"]."</td>
@@ -408,6 +407,73 @@ desired effect
                          </table>
                        </div>
                      </div>
+                     <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="contract_reset();"/>
+                </div>
+
+          <!--_________________Expired Tab Starts____________________-->
+              <div class="tab-pane" id="tab_expired">
+                <!-- search -->
+                <div class="input-group margin">
+                    <div class="input-group-btn">
+                      <select type="button" id="expired_swith" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">            <span class="fa fa-caret-down">
+                      <option value="">Search with</option>
+                      <option value=1>Username</option>
+                      <option value=0>Contract Code</option>
+                      <option value=2>Name</option>
+                      <option value=4>Phone</option>
+                      </span></select>
+                     </div>
+
+                     <!-- type select-->
+                          <div class="input-group-btn">
+                          <select type="button" id="exp_type_select" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="fa fa-caret-down">
+                          <option value="">All Types</option>
+                          <option value="clinic">Clinic</option>
+                          <option value="hospital">Hospital</option>
+                          <option value="lap">Lap</option>
+                          </span></select>
+                         </div>
+
+                    <!-- /btn-group -->
+                    <input type="text" id="expired_sval" class="form-control">
+                    <span class="input-group-btn">
+                      <input type="button" class="btn btn-info btn-flat" value="Search" onclick="search_expired();"/>
+                    </span>
+                  </div>
+                  <!-- search ends-->
+                  <div class="box">
+                      <div class="box-body">
+                        <table id="expired_tbl" class="table table-bordered table-hover">
+                          <thead>
+                          <tr>
+                            <th>Contract Code</th>
+                            <th>Username</th>
+                            <th>Doctor's name</th>
+                            <th>Type</th>
+                            <th>Phone</th>
+                            <th>Expiration Date</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            <?php 
+                                  mysqli_data_seek($expirations, 0);
+                                  while($row = $expirations->fetch_assoc()) {
+                                      echo "<tr>
+                                            <td>".$row["cont_code"]."</td>
+                                            <td>".$row["doc_email"]."</td>
+                                            <td>".$row["doc_fname"].' '.$row["doc_sname"].' '.$row["doc_lname"]."</td>
+                                            <td>".$row["med_type"]."</td>
+                                            <td>".$row["exp_date"]."</td>
+                                            </tr>";
+                                  }
+                              
+                            ?>
+                          </tbody>
+                         </table>
+                       </div>
+                     </div>
+                     <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="expired_reset();"/>
                 </div>
 
               <!--_________________Doctors Tab Starts____________________-->
@@ -459,6 +525,7 @@ desired effect
                          </table>
                        </div>
                      </div>
+                     <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="doctor_reset();"/>
                   </div>
 
         <!--_________________Clinics Tab Starts____________________-->
@@ -503,7 +570,7 @@ desired effect
                                             <td>".$row["med_id"]."</td>
                                             <td>".$row["med_name"]."</td>
                                             <td>".$row["phone"]."</td>
-                                            <td>".$row["detailed"]."</td>
+                                            <td>".$row["detailed_add"]."</td>
                                             <td>".$row["doc_email"]."</td>
                                             <td>".$row["doc_fname"].' '.$row["doc_sname"].' '.$row["doc_lname"]."</td>
                                             <td>".$row["is_active"]."</td>
@@ -515,6 +582,7 @@ desired effect
                          </table>
                        </div>
                      </div>
+                     <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="clinic_reset();"/>
                   </div>
 
           <!--_________________Hospitals Tab Starts____________________-->
@@ -558,7 +626,7 @@ desired effect
                                             <td>".$row["med_id"]."</td>
                                             <td>".$row["med_name"]."</td>
                                             <td>".$row["phone"]."</td>
-                                            <td>".$row["detailed"]."</td>
+                                            <td>".$row["detailed_add"]."</td>
                                             <td>".$row["doc_email"]."</td>
                                             <td>".$row["doc_fname"].' '.$row["doc_sname"].' '.$row["doc_lname"]."</td>
                                             <td>".$row["is_active"]."</td>
@@ -570,6 +638,7 @@ desired effect
                          </table>
                        </div>
                      </div>
+                     <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="hospital_reset();"/>
                 </div>
 
               <!--_________________Laps Tab Starts____________________-->
@@ -613,7 +682,7 @@ desired effect
                                             <td>".$row["med_id"]."</td>
                                             <td>".$row["med_name"]."</td>
                                             <td>".$row["phone"]."</td>
-                                            <td>".$row["detailed"]."</td>
+                                            <td>".$row["detailed_add"]."</td>
                                             <td>".$row["doc_email"]."</td>
                                             <td>".$row["doc_fname"].' '.$row["doc_sname"].' '.$row["doc_lname"]."</td>
                                             <td>".$row["is_active"]."</td>
@@ -625,6 +694,7 @@ desired effect
                          </table>
                        </div>
                      </div>
+                     <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="lap_reset();"/>
                   </div>
 
               <!--_________________Appointments Tab Starts____________________-->
@@ -635,11 +705,11 @@ desired effect
                       <select type="button" id="appointment_swith" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="fa fa-caret-down">
                       <option value="">Search with</option>
-                      <option value="Pat_id">Patient National ID</option>
-                      <option value="pat_name">Patient's name</option>
-                      <option value="doc_name">Doctor's name</option>
-                      <option value="med_name">Medical Name</option>
-                      <option value="med_Phone">Medical Phone</option>
+                      <option value=0>Patient National ID</option>
+                      <option value=1>Patient's name</option>
+                      <option value=2>Doctor's name</option>
+                      <option value=4>Medical Name</option>
+                      <option value=5>Medical Phone</option>
                       </span></select>
                      </div>
 
@@ -649,7 +719,7 @@ desired effect
                             <span class="fa fa-caret-down">
                           <option value="">All Types</option>
                           <option value="clinic">Clinic</option>
-                          <option value="hopital">Hospital</option>
+                          <option value="hospital">Hospital</option>
                           <option value="lap">Lap</option>
                           </span></select>
                          </div>
@@ -702,6 +772,7 @@ desired effect
                          </table>
                        </div>
                      </div>
+                     <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="appointment_reset();"/>
                   </div>
 
               <!--_________________Confirmed Tab Starts____________________-->
@@ -711,13 +782,14 @@ desired effect
                     <div class="input-group-btn">
                       <select type="button" id="confirmed_swith" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">            <span class="fa fa-caret-down">
                       <option value="">Search with</option>
-                      <option value="Pat_id">Patient National ID</option>
-                      <option value="pat_name">Patient's name</option>
-                      <option value="doc_name">Doctor's name</option>
+                      <option value=0>Patient National ID</option>
+                      <option value=1>Patient's name</option>
+                      <option value=2>Doctor's username</option>
+                      <option value=3>Doctor's name</option>
                       </span></select>
                      </div>
                     <!-- /btn-group -->
-                    <input type="text" class="form-control">
+                    <input type="text" id="confirmed_sval" class="form-control">
                     <span class="input-group-btn">
                       <input type="button" class="btn btn-info btn-flat" value="Search" onclick="search_confirmed();"/>
                     </span>
@@ -755,6 +827,7 @@ desired effect
                          </table>
                        </div>
                      </div>
+                     <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="confirmed_reset();"/>
                   </div>
 
               <!--_________________Patients Tab Starts____________________-->
@@ -762,16 +835,16 @@ desired effect
                 <!-- search -->
                 <div class="input-group margin">
                     <div class="input-group-btn">
-                      <select type="button" id="pateint_swith" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">            <span class="fa fa-caret-down">
+                      <select type="button" id="patient_swith" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">            <span class="fa fa-caret-down">
                       <option value="">Search with</option>
-                      <option value="Pat_id">National ID</option>
-                      <option value="pat_name">Name</option>
-                      <option value="Pat_phone">Phone</option>
-                      <option value="pat_email">Email</option>
+                      <option value=0>National ID</option>
+                      <option value=1>Name</option>
+                      <option value=2>Phone</option>
+                      <option value=3>Email</option>
                       </span></select>
                      </div>
                     <!-- /btn-group -->
-                    <input type="text" class="form-control">
+                    <input type="text" id="patient_sval" class="form-control">
                     <span class="input-group-btn">
                       <input type="button" class="btn btn-info btn-flat" value="Search" onclick="search_patients();"/>
                     </span>
@@ -805,6 +878,7 @@ desired effect
                          </table>
                        </div>
                      </div>
+                     <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="patient_reset();"/>
                   </div>
       </div>
 
@@ -831,8 +905,9 @@ desired effect
        immediately after the control sidebar -->
   
 </div>
+<script src="resets.js"></script>
 <!-- ./wrapper -->
-
+<script src="notif_click.js"></script>
 <!-- REQUIRED JS SCRIPTS -->
 <script src="searches.js"></script>
 <!-- jQuery 2.2.3 -->
