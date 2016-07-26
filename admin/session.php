@@ -1,5 +1,5 @@
    <?php
-   include('../db/config.php');
+   include('/../db/config.php');
    session_start();
    if(!isset($_SESSION['login_user'])){
       header("location: /ekshefle/admin/login.php");

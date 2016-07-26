@@ -7,7 +7,7 @@ $reqs_query = "SELECT d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname , r.med
               $requests = $db->query($reqs_query);
               $requests_num = $requests->num_rows;
 
-$apps_query= "SELECT p.nat_id, p.pat_name ,m.med_id ,m.med_name, m.med_type, app.time_date,phn.phone, d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname ,s.spec_name
+$apps_query= "SELECT app.app_id, p.nat_id, p.pat_name ,m.med_id ,m.med_name, m.med_type, app.time_date,phn.phone, d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname ,s.spec_name
 				FROM patient as p, medical as m, appointment as app, phone as phn, doctor as d, med_spec as ms, speciality as s
 				WHERE app.confirmed=0
 				AND app.pat_id = p.nat_id

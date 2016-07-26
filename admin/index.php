@@ -39,26 +39,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -118,7 +99,8 @@ desired effect
             <!-- Menu toggle button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-calendar-times-o"></i>
-              <?php if($expirations_num>0)'<span class="label label-warning">'.$expirations_num.'</span>'; ?>
+              <?php if($expirations_num > 0) 
+                      echo '<span class="label label-danger">'.$expirations_num.'</span>'; ?>
             </a>
             <ul class="dropdown-menu">
               
@@ -128,7 +110,7 @@ desired effect
                   {
                     echo '<li> <a onclick="exp_click('."'".$row['doc_email']."'".');" href="#tab_expired" data-toggle="tab"> <h4> Doctor '
                     .$row['doc_fname'].' '.$row['doc_sname'].' '.$row['doc_lname'].'</h4>'
-                    .$row['med_type'].'s contract '.$row['contract_code'].' expired</p></a></li>';
+                    .$row['med_type'].'s contract '.$row['cont_code'].' expired</p></a></li>';
                   }
               ?>
               <li class="footer"><a href="#tab_expired" data-toggle="tab">View all timed out</a></li> 
@@ -139,7 +121,7 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-odnoklassniki"></i>
-              <?php if($appointments_num>0) echo '<span class="label label-danger">'.$appointments_num.'</span>'; ?>
+              <?php if($appointments_num>0) echo '<span class="label label-success  ">'.$appointments_num.'</span>'; ?>
             </a>
             <ul class="dropdown-menu">
               <li class="header"><?php echo $appointments_num ?> new appointments</li>
@@ -210,6 +192,7 @@ desired effect
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
+
   <aside class="main-sidebar">
 
     <!-- sidebar: style can be found in sidebar.less -->
@@ -322,6 +305,7 @@ desired effect
                             <th>Type</th>
                             <th>Phone</th>
                             <th>Address</th>
+                            <th>Operations</th>
                           </tr>
                           </thead>
                           <tbody>
@@ -334,6 +318,10 @@ desired effect
                                             <td>".$row["med_type"]."</td>
                                             <td>".$row["doc_phone"]."</td>
                                             <td>".$row["doc_address"]."</td>
+                                            <td><input class='btn btn-success btn-xs' type='button' data-toggle='modal' data-target='#approve_div' value='Approve' 
+                                                  onclick='approve(\"".$row["doc_email"]."\",\"".$row["med_type"]."\")'/>
+                                                <input class='btn btn-danger btn-xs' type='button' value='Deny' data-toggle='modal' data-target='#deny_div' 
+                                                  onclick='deny(\"".$row["doc_email"]."\",\"".$row["med_type"]."\")'/></td>
                                             </tr>";
                                   }
                               
@@ -345,6 +333,66 @@ desired effect
                      <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="request_reset();"/>
                   </div>
 
+                      <!-- approve handling-->
+                        <div id="approve_div" class="modal fade" style="display: none; "> 
+                            <div class="modal-dialog">
+                            <div class="modal-content"> 
+
+                                <div class="modal-header">  
+                                    <a class="close" data-dismiss="modal">×</a>  
+                                    <h3>Approve publishing request</h3>  
+                                </div>  
+
+                                <form action="operations/approve.php" method="post">
+                                  <div class="modal-body"> 
+
+                                      <h5>Owner doctor:</h5>
+                                      <input type="text" class="form-control" id="approve_doc" name="doc_email"/> 
+                                      <h5>Medical Type to publish:</h5>  
+                                      <input type="text" class="form-control" id="approve_type" name="med_type" />
+                                      <h5>Contract Code:</h5>  
+                                      <input type="text" class="form-control" name="cont_code" />
+                                      <h5>Start Date:</h5>  
+                                      <input type="date" name="start_date" />
+                                      <h5>Expiration Date:</h5>  
+                                      <input type="date" name="exp_date" />
+                                  </div> 
+                                      
+                                  <div class="modal-footer">  
+                                  <input type="submit" class="btn btn-success" value="Submit"/>  
+                                  <a href="#" class="btn" data-dismiss="modal">Close</a>  
+                                  </div>
+                                </form>     
+
+                            </div>          
+                           </div>
+                         </div>
+                         <!-- Deny handling-->
+                        <div id="deny_div" class="modal fade" style="display: none; "> 
+                            <div class="modal-dialog">
+                            <div class="modal-content"> 
+
+                                <div class="modal-header">  
+                                    <a class="close" data-dismiss="modal">×</a>  
+                                    <h3>Are you sure you want to deny this request?</h3>  
+                                </div>  
+
+                              <form action="operations/deny.php" method="post">
+                                <div class="modal-body"> 
+                                      <h5>Owner doctor:</h5>
+                                      <input type="text" class="form-control" id="deny_doc" name="doc_email"/> 
+                                      <h5>Medical type:</h5>  
+                                      <input type="text" class="form-control" id="deny_type" name="med_type"/>  
+                                </div> 
+
+                                <div class="modal-footer"> 
+                                <input type="submit"  class="btn btn-danger" value="Deny"/>  
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                </div>
+                              </form>
+                            </div>          
+                           </div>                          
+                        </div>
           <!--_________________Contracts Tab Starts____________________-->
               <div class="tab-pane" id="tab_contracts">
                 <!-- search -->
@@ -387,6 +435,7 @@ desired effect
                             <th>Type</th>
                             <th>Start date</th>
                             <th>Expiration Date</th>
+                            <th>Operations</th>
                           </tr>
                           </thead>
                           <tbody>
@@ -399,6 +448,8 @@ desired effect
                                             <td>".$row["med_type"]."</td>
                                             <td>".$row["start_date"]."</td>
                                             <td>".$row["exp_date"]."</td>
+                                            <td><input class='btn btn-danger btn-xs' type='button' data-toggle='modal' data-target='#del_contract_div' value='Delete' 
+                                                  onclick='delete_contract(\"".$row["cont_code"]."\",\"".$row["doc_email"]."\",\"".$row["med_type"]."\")'/></td>
                                             </tr>";
                                   }
                               
@@ -408,7 +459,70 @@ desired effect
                        </div>
                      </div>
                      <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="contract_reset();"/>
+                     <div class="pull-right">
+                      <input type="button" class="btn btn-success btn-flat" value="New Contract" data-toggle="modal" data-target="#new_contract_div"/>
+                     </div>
                 </div>
+
+                        <!-- new contract handling-->
+                        <div id="new_contract_div" class="modal fade" style="display: none; "> 
+                            <div class="modal-dialog">
+                            <div class="modal-content"> 
+
+                                <div class="modal-header">  
+                                    <a class="close" data-dismiss="modal">×</a>  
+                                    <h3>Add new contract</h3>  
+                                </div>  
+
+                              <form action="operations/add_contract.php" method="post">
+                                <div class="modal-body"> 
+                                      <h5>Email/Username of owner doctor:</h5>
+                                      <input type="text" class="form-control" id="approve_doc" name="doc_email"/> 
+                                      <h5>Medical Type to publish:</h5>  
+                                      <input type="text" id="approve_type" name="med_type" />
+                                      <h5>Contract Code:</h5>  
+                                      <input type="text" name="cont_code" />
+                                      <h5>Start Date:</h5>  
+                                      <input type="date" name="start_date" />
+                                      <h5>Expiration Date:</h5>  
+                                      <input type="date" name="exp_date" /> 
+                                  </div> 
+                                <div class="modal-footer"> 
+                                <input type="submit"  class="btn btn-danger" value="Submit"/>  
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                </div>
+                              </form>
+                            </div>          
+                           </div>                          
+                        </div>
+
+                        <!-- delete contract handling-->
+                        <div id="del_contract_div" class="modal fade" style="display: none; "> 
+                            <div class="modal-dialog">
+                            <div class="modal-content"> 
+
+                                <div class="modal-header">  
+                                    <a class="close" data-dismiss="modal">×</a>  
+                                    <h3>Are you sure? deleting this contract can't be undone!</h3>  
+                                </div>  
+
+                              <form action="operations/delete_contract.php" method="post">
+                                <div class="modal-body"> 
+                                      <h5>Contract Code:</h5>  
+                                      <input type="text" class="form-control" id="del_cont_code" name="cont_code"/>
+                                      <h5>Email/Username of owner doctor:</h5>
+                                      <label id="del_cont_doc"></label> 
+                                      <h5>Medical Type to publish:</h5>  
+                                      <label id="del_cont_type"></label>
+                                  </div> 
+                                <div class="modal-footer"> 
+                                <input type="submit"  class="btn btn-danger" value="Submit"/>  
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                </div>
+                              </form>
+                            </div>          
+                           </div>                          
+                        </div>
 
           <!--_________________Expired Tab Starts____________________-->
               <div class="tab-pane" id="tab_expired">
@@ -453,6 +567,7 @@ desired effect
                             <th>Type</th>
                             <th>Phone</th>
                             <th>Expiration Date</th>
+                            <th>Operations<th/>
                           </tr>
                           </thead>
                           <tbody>
@@ -464,7 +579,10 @@ desired effect
                                             <td>".$row["doc_email"]."</td>
                                             <td>".$row["doc_fname"].' '.$row["doc_sname"].' '.$row["doc_lname"]."</td>
                                             <td>".$row["med_type"]."</td>
+                                            <td>".$row["doc_phone"]."</td>
                                             <td>".$row["exp_date"]."</td>
+                                            <td><input class='btn btn-danger btn-xs' type='button' data-toggle='modal' data-target='#del_expired_div' value='Delete' 
+                                                  onclick='delete_expired(\"".$row["cont_code"]."\",\"".$row["doc_email"]."\",\"".$row["med_type"]."\")'/></td>
                                             </tr>";
                                   }
                               
@@ -474,7 +592,36 @@ desired effect
                        </div>
                      </div>
                      <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="expired_reset();"/>
+                     <a href="operations/del_all_exp.php" class="btn btn-danger btn-flat pull-right">Delete all expired</a>
                 </div>
+
+                <!-- delete expired handling-->
+                        <div id="del_expired_div" class="modal fade" style="display: none; "> 
+                            <div class="modal-dialog">
+                            <div class="modal-content"> 
+
+                                <div class="modal-header">  
+                                    <a class="close" data-dismiss="modal">×</a>  
+                                    <h3>Are you sure? deleting this contract can't be undone!</h3>  
+                                </div>  
+
+                              <form action="operations/delete_contract.php" method="post">
+                                <div class="modal-body"> 
+                                      <h5>Contract Code:</h5>  
+                                      <input type="text" class="form-control" id="del_exp_code" name="cont_code"/>
+                                      <h5>Email/Username of owner doctor:</h5>
+                                      <label id="del_exp_doc"></label> 
+                                      <h5>Medical Type:</h5>  
+                                      <label id="del_exp_type"></label>
+                                  </div> 
+                                <div class="modal-footer"> 
+                                <input type="submit"  class="btn btn-danger" value="Submit"/>  
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                </div>
+                              </form>
+                            </div>          
+                           </div>                          
+                        </div>
 
               <!--_________________Doctors Tab Starts____________________-->
               <div class="tab-pane" id="tab_doctors">
@@ -506,6 +653,7 @@ desired effect
                             <th>Phone</th>
                             <th>Address</th>
                             <th>Specialty</th>
+                            <th>Operations</th>
                           </tr>
                           </thead>
                           <tbody>
@@ -517,6 +665,8 @@ desired effect
                                             <td>".$row["doc_phone"]."</td>
                                             <td>".$row["doc_address"]."</td>
                                             <td>".$row["spec_name"]."</td>
+                                            <td><input class='btn btn-danger btn-xs' type='button' data-toggle='modal' data-target='#del_doctor_div' value='Delete' 
+                                                  onclick='delete_doctor(\"".$row["doc_email"]."\")'/></td>
                                             </tr>";
                                   }
                               
@@ -527,6 +677,30 @@ desired effect
                      </div>
                      <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="doctor_reset();"/>
                   </div>
+
+                       <!-- delete doctor handling-->
+                        <div id="del_doctor_div" class="modal fade" style="display: none; "> 
+                            <div class="modal-dialog">
+                            <div class="modal-content"> 
+
+                                <div class="modal-header">  
+                                    <a class="close" data-dismiss="modal">×</a>  
+                                    <h3>Are you sure? deleting this doctor can't be undone!</h3>  
+                                </div>  
+
+                              <form action="operations/delete_doctor.php" method="post">
+                                <div class="modal-body"> 
+                                      <h5>Email/Username of owner doctor:</h5>  
+                                      <input type="text" class="form-control" id="del_doc_email" name="doc_email"/>
+                                </div> 
+                                <div class="modal-footer"> 
+                                <input type="submit"  class="btn btn-danger" value="Delete"/>  
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                </div>
+                              </form>
+                            </div>          
+                           </div>                          
+                        </div>
 
         <!--_________________Clinics Tab Starts____________________-->
             <div class="tab-pane" id="tab_clinics">
@@ -705,11 +879,11 @@ desired effect
                       <select type="button" id="appointment_swith" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="fa fa-caret-down">
                       <option value="">Search with</option>
-                      <option value=0>Patient National ID</option>
-                      <option value=1>Patient's name</option>
-                      <option value=2>Doctor's name</option>
-                      <option value=4>Medical Name</option>
-                      <option value=5>Medical Phone</option>
+                      <option value=1>Patient National ID</option>
+                      <option value=2>Patient's name</option>
+                      <option value=3>Doctor's name</option>
+                      <option value=5>Medical Name</option>
+                      <option value=6>Medical Phone</option>
                       </span></select>
                      </div>
 
@@ -737,6 +911,7 @@ desired effect
                         <table id="appointment_tbl" class="table table-bordered table-hover">
                           <thead>
                           <tr>
+                            <th></th>
                             <th>Patient's ID</th>
                             <th>Pateint's Name</th>
                             <th>Doctor's Name</th>
@@ -754,6 +929,7 @@ desired effect
                                   mysqli_data_seek($appointments, 0);
                                   while($row = $appointments->fetch_assoc()) {
                                       echo "<tr>
+                                            <td>".$row["app_id"]."</td>
                                             <td>".$row["nat_id"]."</td>
                                             <td>".$row["pat_name"]."</td>
                                             <td>".$row["doc_fname"].' '.$row["doc_sname"].' '.$row["doc_lname"]."</td>
@@ -763,7 +939,10 @@ desired effect
                                             <td>".$row["phone"]."</td>
                                             <td>".$row["time_date"]."</td>
                                             <td>".$row["spec_name"]."</td>
-                                            <td><input type='button' value='confirm'></td>
+                                            <td><input class='btn btn-success btn-xs' type='button' data-toggle='modal' data-target='#confirm_div' value='Confirm' 
+                                                  onclick='confirm(\"".$row["app_id"]."\",\"".$row["nat_id"]."\",\"".$row["med_id"]."\",\"".$row["time_date"]."\")'/>
+                                                <input class='btn btn-danger btn-xs' type='button' value='Cancel' data-toggle='modal' data-target='#cancel_div' 
+                                                  onclick='cancel(\"".$row["app_id"]."\",\"".$row["nat_id"]."\",\"".$row["med_id"]."\")'/></td>
                                             </tr>";
                                   }
                               
@@ -773,8 +952,67 @@ desired effect
                        </div>
                      </div>
                      <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="appointment_reset();"/>
-                  </div>
+                    </div>
+                        <!-- confirmation handling-->
+                        <div id="confirm_div" class="modal fade" style="display: none; "> 
+                            <div class="modal-dialog">
+                            <div class="modal-content"> 
 
+                                <div class="modal-header">  
+                                    <a class="close" data-dismiss="modal">×</a>  
+                                    <h3>Confirm this patient</h3>  
+                                </div>  
+
+                                <form action="operations/confirm.php" method="post">
+                                  <div class="modal-body"> 
+                                      <h5>Appointment ID:</h5>
+                                      <input type="text" class="form-control" id="conf_app_id" name="app_id"/> 
+                                      <h5>Patient ID:</h5>
+                                      <label id="conf_pat_id"></label> 
+                                      <h5>Medical ID:</h5>  
+                                      <label id="conf_med_id"></label> 
+                                      <h5>Date & Time:</h5>  
+                                      <input type="text" id="conf_date_time" name="real_date"/> 
+                                  </div> 
+                                      
+                                  <div class="modal-footer">  
+                                  <input type="submit" class="btn btn-success" value="Confirm"/>  
+                                  <a href="#" class="btn" data-dismiss="modal">Close</a>  
+                                  </div>
+                                </form>     
+
+                            </div>          
+                           </div>
+                         </div>
+                         <!-- Cancelation handling-->
+                        <div id="cancel_div" class="modal fade" style="display: none; "> 
+                            <div class="modal-dialog">
+                            <div class="modal-content"> 
+
+                                <div class="modal-header">  
+                                    <a class="close" data-dismiss="modal">×</a>  
+                                    <h3>Are you sure you want to cancel this appointment?</h3>  
+                                </div>  
+
+                              <form action="operations/cancel.php" method="post">
+                                <div class="modal-body"> 
+                                      <h5>Appointment ID:</h5>
+                                      <input type="text" class="form-control" id="cancel_app_id" name="app_id"/> 
+                                      <h5>Patient ID:</h5>
+                                      <label id="cancel_pat_id"></label> 
+                                      <h5>Medical ID:</h5>  
+                                      <label id="cancel_med_id"></label>  
+                                </div> 
+
+                                <div class="modal-footer"> 
+                                <input type="submit"  class="btn btn-danger" value="Yes"/>  
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                </div>
+
+                              </form>
+                            </div>          
+                           </div>                          
+                        </div>               
               <!--_________________Confirmed Tab Starts____________________-->
               <div class="tab-pane" id="tab_confirmed">
                 <!-- search -->
@@ -819,7 +1057,7 @@ desired effect
                                             <td>".$row["doc_fname"].' '.$row["doc_sname"].' '.$row["doc_lname"]."</td>
                                             <td>".$row["med_id"]."</td>
                                             <td>".$row["med_type"]."</td>
-                                            <td>".$row["time_date"]."</td>
+                                            <td>".$row["real_date"]."</td>
                                             </tr>";
                                   }
                             ?>
@@ -860,6 +1098,7 @@ desired effect
                             <th>Phone</th>
                             <th>E-mail</th>
                             <th>Address</th>
+                            <th>Operations</th>
                           </tr>
                           </thead>
                           <tbody>
@@ -871,6 +1110,8 @@ desired effect
                                             <td>".$row["pat_phone"]."</td>
                                             <td>".$row["pat_email"]."</td>
                                             <td>".$row["pat_address"]."</td>
+                                            <td><input class='btn btn-danger btn-xs' type='button' data-toggle='modal' data-target='#del_patient_div' value='Delete' 
+                                                  onclick='delete_patient(\"".$row["nat_id"]."\")'/></td>
                                             </tr>";
                                   }
                             ?>
@@ -880,6 +1121,30 @@ desired effect
                      </div>
                      <input type="button" class="btn btn-info btn-flat" value="Reset" onclick="patient_reset();"/>
                   </div>
+
+                    <!-- delete Patient handling-->
+                        <div id="del_patient_div" class="modal fade" style="display: none; "> 
+                            <div class="modal-dialog">
+                            <div class="modal-content"> 
+
+                                <div class="modal-header">  
+                                    <a class="close" data-dismiss="modal">×</a>  
+                                    <h3>Are you sure? deleting this Patient can't be undone!</h3>  
+                                </div>  
+
+                              <form action="operations/delete_patient.php" method="post">
+                                <div class="modal-body"> 
+                                      <h5>Patient National ID:</h5>  
+                                      <input type="text" class="form-control" id="del_pat_id" name="nat_id"/>
+                                </div> 
+                                <div class="modal-footer"> 
+                                  <input type="submit"  class="btn btn-danger" value="Delete"/>  
+                                  <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                </div>
+                              </form>
+                            </div>          
+                           </div>                          
+                        </div>
       </div>
 
     </section>
@@ -905,6 +1170,7 @@ desired effect
        immediately after the control sidebar -->
   
 </div>
+<script src="operations.js"></script>
 <script src="resets.js"></script>
 <!-- ./wrapper -->
 <script src="notif_click.js"></script>

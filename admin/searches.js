@@ -247,18 +247,18 @@ function search_appointments()
 //get search value
 var sval= document.getElementById('appointment_sval').value;
 
-if(sval==""){
-alert("Input box is empty!");
-return;
-}
+	if(sval==""){
+	alert("Input box is empty!");
+	return;
+	}
 //get search with constrain
 var swith = document.getElementById("appointment_swith");
 var swith_ix = swith.options[swith.selectedIndex].value;
 
-if(swith_ix==""){
-alert("Select what to search with!");
-return;
-}
+	if(swith_ix==""){
+	alert("Select what to search with!");
+	return;
+	}
 
 //get search type
 var stype = document.getElementById("apps_type_select");
@@ -272,7 +272,7 @@ result="<thead>"+appointment_rows.item(0).innerHTML+"</thead><tbody>";
 		var val= appointment_rows.item(i).cells.item(swith_ix).innerHTML;
 
 		if(stype_val!=""){
-		var type= appointment_rows.item(i).cells.item(5).innerHTML;
+		var type= appointment_rows.item(i).cells.item(6).innerHTML;
 		if(val.toString().toLowerCase().search(sval.toLowerCase())!=-1 && type.toLowerCase()==stype_val)
 			result+="<tr>"+appointment_rows.item(i).innerHTML+"</tr>";
 		}

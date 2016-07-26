@@ -38,7 +38,7 @@ $lap_query="SELECT m.med_id, m.med_name, ph.phone, addr.detailed_add, d.doc_emai
 				
 				$laps=$db->query($lap_query);
 
-$confirmed_query="SELECT p.nat_id, p.pat_name, d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname, m.med_id,m.med_type, app.time_date
+$confirmed_query="SELECT p.nat_id, p.pat_name, d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname, m.med_id,m.med_type, app.real_date
 					from patient as p, doctor as d, medical as m, appointment as app
 					where app.confirmed=1
 					and p.nat_id=app.pat_id
