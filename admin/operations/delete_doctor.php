@@ -1,5 +1,5 @@
 <?php
-include('../session.php');
+require_once('../session.php');
 
 
 $doc_email= $_POST["doc_email"];

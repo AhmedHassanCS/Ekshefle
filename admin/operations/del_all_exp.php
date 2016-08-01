@@ -1,5 +1,5 @@
 <?php
-include('../session.php');
+require_once('../session.php');
 	
 	$del_query="DELETE from contract where is_expired=1";
 	if(!$db->query($del_query))

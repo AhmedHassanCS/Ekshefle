@@ -1,5 +1,5 @@
 <?php
-include('../session.php');
+require_once('../session.php');
 
 $app_id= $_POST["app_id"];
 $real_date= $_POST["real_date"];

@@ -1,5 +1,5 @@
 <?php
-   include('../db/config.php');
+   require_once('../db/config.php');
    session_start();
    if(isset($_SESSION['login_user'])){
       $user_check = $_SESSION['login_user'];
@@ -28,7 +28,6 @@
       // If result matched $myusername and $mypassword, table row must be 1 row
       if($count == 1) {
          $_SESSION['login_user'] = $myusername;
-         //echo "shit";
          header("location: /ekshefle/admin/");
       }else {
          $error = "Your Username or Password is invalid!";

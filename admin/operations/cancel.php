@@ -1,5 +1,5 @@
 <?php
-include('../session.php');
+require_once('../session.php');
 
 $app_id= $_POST["app_id"];
 $med_id= $_POST["med_id"];

@@ -1,5 +1,5 @@
 <?php
-include('../session.php');
+require_once('../session.php');
 
 
 $cont_code= $_POST["cont_code"];
