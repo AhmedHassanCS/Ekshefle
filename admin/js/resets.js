@@ -22,9 +22,9 @@ function hospital_reset()
 {
 document.getElementById('hospital_tbl').innerHTML = cln_hospital.innerHTML;
 }
-function lap_reset()
+function lab_reset()
 {
-document.getElementById('lap_tbl').innerHTML = cln_lap.innerHTML;
+document.getElementById('lab_tbl').innerHTML = cln_lab.innerHTML;
 }
 function appointment_reset()
 {

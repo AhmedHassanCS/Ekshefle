@@ -2,7 +2,7 @@
 require_once('../session.php');
 
 
-$nat_id= $_POST["nat_id"];
+$nat_id= mysqli_real_escape_string($db,$_POST["nat_id"]);
 
 $exist_query= "SELECT nat_id from patient where nat_id ='$nat_id'";
 

@@ -1,7 +1,6 @@
 <?php
 include('session.php');
 include('notifications.php');
-include('main_tables.php');
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bootstrap/fonts/font-awesome-4.6.3/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
@@ -77,12 +77,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- inner menu: contains the messages -->
                 <ul class="menu">
                     <?php 
-                  while($row = $requests->fetch_assoc()) 
-                  {
-                    echo '<li> <a onclick="req_click('."'".$row['doc_email']."'".');" href="#tab_requests" data-toggle="tab"> <h4> Doctor '
-                    .$row['doc_fname'].' '.$row['doc_sname'].' '.$row['doc_lname'].'</h4>'
-                    .'<p>Wants to publish his '.$row['med_type'].'s</p></a></li>';
-                  }
+                      while($row = $requests->fetch_assoc()) 
+                      {
+                        echo '<li> <a onclick="load_requests(true,'."'".$row['doc_email']."'".');" href="#" data-toggle="tab"> <h4> Doctor '
+                        .$row['doc_fname'].' '.$row['doc_sname'].' '.$row['doc_lname'].'</h4>'
+                        .'<p>Wants to publish his '.$row['med_type'].'s</p></a></li>';
+                      }
                   ?>
                   <!-- end message -->
                 </ul>
@@ -107,7 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <?php 
                   while($row = $expirations->fetch_assoc()) 
                   {
-                    echo '<li> <a onclick="exp_click('."'".$row['doc_email']."'".');" href="#tab_expired" data-toggle="tab"> <h4> Doctor '
+                    echo '<li> <a onclick="load_expired(true, '."'".$row['doc_email']."'".');" href="#tab_expired" data-toggle="tab"> <h4> Doctor '
                     .$row['doc_fname'].' '.$row['doc_sname'].' '.$row['doc_lname'].'</h4>'
                     .$row['med_type'].'s contract '.$row['cont_code'].' expired</p></a></li>';
                   }
@@ -130,7 +130,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <?php 
                   while($row = $appointments->fetch_assoc()) 
                   {
-                    echo '<li> <a onclick="app_click('."'".$row['nat_id']."'".');" href="#tab_appointments" data-toggle="tab"> <h5>'.$row['pat_name'].'</h5>'
+                    echo '<li> <a onclick="load_appointments(true, '."'".$row['nat_id']."'".');" href="#tab_appointments" data-toggle="tab"> <h5>'
+                    .$row['pat_name'].'</h5>'
                     .'<p><small>Appointment in Dr. '.$row['doc_fname'].' '.$row['doc_sname']."'s ".$row['med_type'].'</small></p></a></li>';
                   }
                   ?>

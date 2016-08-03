@@ -1,11 +1,11 @@
 <?php
 require_once('../session.php');
 
-$cont_code= $_POST["cont_code"];
-$doc_email= $_POST["doc_email"];
-$med_type= $_POST["med_type"];
-$start_date= $_POST["start_date"];
-$exp_date= $_POST["exp_date"];
+$cont_code= mysqli_real_escape_string($db, $_POST["cont_code"]);
+$doc_email= mysqli_real_escape_string($db, $_POST["doc_email"]);
+$med_type= mysqli_real_escape_string($db, $_POST["med_type"]);
+$start_date= mysqli_real_escape_string($db, $_POST["start_date"]);
+$exp_date= mysqli_real_escape_string($db, $_POST["exp_date"]);
 
 $get_id="SELECT doc_id from doctor where doc_email='$doc_email'"; // sql injection is not handled
 $res_doc = $db->query($get_id);
@@ -21,7 +21,7 @@ if(mysqli_num_rows($res_doc)==1){
         $existing=$check_result->fetch_assoc();
         //if it exists and not expired, cancel operation and print error
         if( $existing["is_expired"]==0)
-            echo "Error: That contract already exist and running";
+            echo "<h2>Error: That contract already exist and running</h2>";
 
         //if it exists but expired, delete expired one and insert the new one
         else if( $existing["is_expired"]==1)
@@ -31,9 +31,9 @@ if(mysqli_num_rows($res_doc)==1){
                 $cont_query="INSERT into contract(cont_code, doc_id ,med_type,start_date, exp_date) 
                             VALUES ('$cont_code' ,$doc_id ,'$med_type' ,STR_TO_DATE('$start_date' ,'%Y-%m-%d'),STR_TO_DATE('$exp_date' ,'%Y-%m-%d'))";
                 if(!$db->query($cont_query))
-                    echo "Error: ".$db->error;
+                    echo "<h2>Error: ".$db->error."</h2>";
                 else header("location: /ekshefle/admin/");
-            }else echo "Error: Can't delete existing expired contract";
+            }else echo "<h2>Error: Can't delete existing expired contract</h2>";
         }
     }
     //if it doesn't exist just add it
@@ -42,8 +42,8 @@ if(mysqli_num_rows($res_doc)==1){
         $cont_query="INSERT into contract(cont_code, doc_id ,med_type,start_date, exp_date) 
                     VALUES ('$cont_code' ,$doc_id ,'$med_type' ,STR_TO_DATE('$start_date' ,'%Y-%m-%d'),STR_TO_DATE('$exp_date' ,'%Y-%m-%d'))";
         if(!$db->query($cont_query))
-            echo "Error: ".$db->error;
-        else echo $check_result["is_expired"];//header("location: /ekshefle/admin/");
+            echo "<h2>Error: ".$db->error."</h2>";
+        else echo $check_result["is_expired"];
     }
-}else echo "Error: No existing doctor with this username";
+}else echo "<h2>Error: No existing doctor with this username</h2>";
 ?>

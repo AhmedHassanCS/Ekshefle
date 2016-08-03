@@ -48,6 +48,5 @@ function delete_doctor(doc_email)
 
 function delete_patient(pat_id)
 {
-		document.getElementById('del_pat_id').value=pat_id;
-
+	document.getElementById('del_pat_id').value=pat_id;
 }

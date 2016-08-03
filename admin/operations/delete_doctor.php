@@ -2,7 +2,7 @@
 require_once('../session.php');
 
 
-$doc_email= $_POST["doc_email"];
+$doc_email= mysqli_real_escape_string($db,$_POST["doc_email"]);
 
 $exist_query= "SELECT doc_id from doctor where doc_email ='$doc_email'";
 

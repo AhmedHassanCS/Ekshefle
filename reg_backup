@@ -1,0 +1,195 @@
+<section id="registration-page" class="container">
+    <form action='' method="POST">
+        
+        
+        
+        
+        
+        <div class="control-group">
+          <!-- Username -->
+          <h4>Username:</h4>
+          <div class="form-group" id="user_cont">
+            <input type="text" id="username" name="username" placeholder="Username" class="form-control" onblur="check_user()">
+            <span class="help-block" id="user_error"></span>
+          </div>
+        </div>
+
+        
+        
+        
+        
+        <div class="control-group">
+          <!-- Username -->
+          <div class="form-group" id="user_cont2">
+            <input type="text" id="username2" name="username" placeholder="Username" class="form-control" onblur="check_user2()">
+            <span class="help-block" id="user_error2"></span>
+          </div>
+        </div>
+        
+          
+          
+          
+          
+          
+        <div class="control-group margin">
+          <!-- name -->
+            <div class="form-group"  id="name_cont">
+            <h4>Name: </h4>
+        <input type="text" id="fname" name="fname" placeholder="First Name"   class="form-control"  onblur="check_fname()"> 
+                <input type="text" id="sname" name="sname" placeholder="Second Name"  class="form-control">
+                <input type="text" id="lname" name="lname" placeholder="last Name"    class="form-control">
+            </div>
+        </div>
+
+
+                
+
+        
+        <div class="control-group margin">
+          <h4>Nick Name</h4>
+          <!-- nick-name -->
+          <div class="form-group">
+            <input type="text" id="nick_name" name="nick_name" placeholder="Nick Name" class="form-control">
+          </div>
+        </div>
+        
+
+          
+          
+          
+
+        <!-- E-mail -->
+        <div class="control-group margin">
+          <div class="input-group">
+                <h4> E-mail </h4>
+            <i class="fa fa-envelope"></i>
+                <input type="text" id="email" name="email"  placeholder="someone@example.com" class="form-control"  >    
+              </div>
+        </div>
+
+        
+        
+        <div class="control-group margin">
+          <h4>make password</h4>
+          <!-- Password-->
+          <div class="form-group">
+            <input type="password" id="password" name="password" placeholder="Password" class="form-control">
+          </div>
+        </div>
+
+        
+        
+        
+        
+        <div class="control-group margin">
+          <h4>confirm password</h4>
+          <!-- Confirm-Password -->
+          <div class="form-group">
+            <input type="password" id="password_confirm" name="password_confirm" placeholder="Password (Confirm)" class="form-control">
+          </div>
+        </div>      
+        
+
+        
+        
+        
+        <div class="control-group margin">
+          <h4>Gender</h4>
+          <!-- gender -->
+          <div class="form-group">
+          <input type="radio" name="gender" value="male" checked> Male<br>
+                <input type="radio" name="gender" value="female"> Female
+          </div>
+        </div>
+
+        
+        
+        
+        
+        <div class="control-group margin">
+          <h4>Your Phone</h4>
+          <!-- doc-phnoe -->
+          <div class="form-group">
+            <input type="text" id="doc_phone" name="doc_phone" placeholder="01000000000" class="form-control">
+          </div>
+        </div>
+        
+
+
+        <div class="control-group margin">
+          <h4>Your Main Speciality</h4>
+          <!-- doc-main-speciality -->
+          <div class="form-group">
+            <input type="text" id="main_speicality" name="main_speicality" placeholder="Main Speciality" class="form-control">
+          </div>
+        </div>      
+        
+        
+        <div class="control-group margin">
+          <h4>Your Current Degree</h4>
+          <!-- degree -->
+          <div class="form-group">
+            <input type="text" id="degree" name="degree" placeholder="Degree" class="form-control">
+          </div>
+        </div>
+        
+        
+        
+        
+        <div class="control-group margin">
+          <h4>Your Biography if you like</h4>
+          <!-- bio -->
+          <div class="form-group">
+            <input type="text" id="bio" name="bio" placeholder="Your Bio" class="form-control">
+          </div>
+        </div>      
+        
+        
+        
+        
+
+        
+        
+        
+        
+        <div class="control-group margin">
+          <h4>Your address if you like</h4>
+          <!-- doc_address -->
+          <div class="form-group">
+            <input type="text" id="doc_address" name="doc_address" placeholder="Your Address" class="form-control">
+          </div>
+        </div>      
+        
+        
+        
+        
+        <div class="control-group margin">
+          <h4>Your picture</h4>
+          <!-- picture -->
+          <div class="form-group">
+                <input type="file" name="ImageToUpload" id="ImageToUpload"   placeholder="No picture chosen" class="form-control">
+          </div>
+        </div>      
+        
+        
+        
+        
+        
+        
+
+
+      
+      
+      
+
+        <div class="control-group margin">
+          <!-- Button -->
+          <div class="form-group">
+            <button class="btn btn-success btn-large btn-block">Register</button>
+          </div>
+        </div>
+      
+      
+      
+    </form>
+  </section>

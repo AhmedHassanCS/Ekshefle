@@ -19,10 +19,10 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#tab_requests" data-toggle="tab">Pending publishing requests</a></li>
-          <li><a href="#tab_contracts" data-toggle="tab">Running contracts</a></li>
-          <li><a href="#tab_expired" data-toggle="tab">Expired contracts</a></li>
-          <li><a href="#tab_doctors" data-toggle="tab">All doctors</a></li>
+          <li><a href="#" onclick="load_requests();" data-toggle="tab">Pending publishing requests</a></li>
+          <li><a href="#" onclick="load_contracts();" data-toggle="tab">Running contracts</a></li>
+          <li><a href="#" onclick="load_expired();" data-toggle="tab">Expired contracts</a></li>
+          <li><a href="#" onclick="load_doctors();" data-toggle="tab">All doctors</a></li>
 
         </ul>
       </li>
@@ -34,9 +34,9 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#tab_clinics" data-toggle="tab">Clinics</a></li>
-          <li><a href="#tab_hospitals" data-toggle="tab">Hospitals</a></li>
-          <li><a href="#tab_laps" data-toggle="tab">Laps</a></li>
+          <li><a href="#" onclick="load_clinics();" data-toggle="tab">Clinics</a></li>
+          <li><a href="#" onclick="load_hospitals();" data-toggle="tab">Hospitals</a></li>
+          <li><a href="#" onclick="load_labs();" data-toggle="tab">labs</a></li>
         </ul>
       </li>
 
@@ -47,9 +47,9 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#tab_appointments" data-toggle="tab">Pending appointments</a></li>
-          <li><a href="#tab_confirmed" data-toggle="tab">Confirmed appointments</a></li>
-          <li><a href="#tab_patients" data-toggle="tab">All patients</a></li>
+          <li><a href="#" onclick="load_appointments();" data-toggle="tab">Pending appointments</a></li>
+          <li><a href="#" onclick="load_confirmed();" data-toggle="tab">Confirmed appointments</a></li>
+          <li><a href="#" onclick="load_patients();" data-toggle="tab">All patients</a></li>
         </ul>
       </li>
 
@@ -58,11 +58,5 @@
   </section>
   <!-- /.sidebar -->
 </aside>
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <!-- Main content -->
-  <section class="content">
-    
-    <div class="tab-content">
+
 

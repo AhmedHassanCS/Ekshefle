@@ -2,7 +2,7 @@
 require_once('../session.php');
 
 
-$cont_code= $_POST["cont_code"];
+$cont_code= mysqli_real_escape_string($db,$_POST["cont_code"]);
 
 $exist_query= "SELECT * from contract where cont_code ='$cont_code'";
 

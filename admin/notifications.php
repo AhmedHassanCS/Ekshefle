@@ -1,13 +1,15 @@
 <?php
 
-$reqs_query = "SELECT d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname , r.med_type, d.doc_phone, d.doc_address
+require_once('session.php');
+
+$reqs_query = "SELECT d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname , r.med_type
 				FROM doctor as d, request as r 
 				WHERE r.doc_id=d.doc_id";
 
               $requests = $db->query($reqs_query);
               $requests_num = $requests->num_rows;
 
-$apps_query= "SELECT app.app_id, p.nat_id, p.pat_name ,m.med_id ,m.med_name, m.med_type, app.time_date, m.phones, d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname ,s.spec_name
+$apps_query= "SELECT p.nat_id, p.pat_name, m.med_type, d.doc_fname, d.doc_sname
 				FROM patient as p, medical as m, appointment as app, doctor as d, med_spec as ms, speciality as s
 				WHERE app.confirmed=0
 				AND app.pat_id = p.nat_id
@@ -19,7 +21,7 @@ $apps_query= "SELECT app.app_id, p.nat_id, p.pat_name ,m.med_id ,m.med_name, m.m
 				$appointments = $db->query($apps_query);
 				$appointments_num = $appointments->num_rows;
 
-$exp_query= "SELECT d.doc_fname, d.doc_sname ,d.doc_lname, d.doc_email, d.doc_phone, d.doc_address, c.cont_code, c.exp_date, c.med_type
+$exp_query= "SELECT d.doc_fname, d.doc_sname ,d.doc_lname, d.doc_email, c.cont_code, c.med_type
 			  FROM doctor as d, contract as c
               where d.doc_id=c.doc_id
               and c.is_expired=1";

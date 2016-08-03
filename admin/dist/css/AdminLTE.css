@@ -4583,9 +4583,6 @@ table.text-center th {
 .link-black:focus {
   color: #999;
 }
-.hide {
-  display: none !important;
-}
 .no-border {
   border: 0 !important;
 }
