@@ -18,11 +18,17 @@ if(mysqli_num_rows($res_doc)==1){
 	if(!$db->query($cont_auery))
 		echo "<h2>Error: ".$db->error."</h2>";
 	else{
+		$update_active="UPDATE medical SET is_active=1 where doc_id=$doc_id and med_type='$med_type'";
+		if(!$db->query($update_active)){
+			echo "<h2>Error: ".$db->error."</h2>";
+		}
+		else{
 			$del_req="DELETE from request where doc_id='$doc_id' and med_type='$med_type'";
 			if(!$db->query($del_req))
 				echo "<h2>Error: ".$db->error."</h2>";
 			else
-			header("location: /ekshefle/admin/");
+				header("location: /ekshefle/admin/");
+		}
 	}
 }
 ?>

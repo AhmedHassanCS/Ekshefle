@@ -117,10 +117,10 @@
 
 
         <div class="control-group margin">
-          <h4>Your Main Speciality</h4>
-          <!-- doc-main-speciality -->
+          <h4>Your Main specialty</h4>
+          <!-- doc-main-specialty -->
           <div class="form-group">
-            <input type="text" id="main_speicality" name="main_speicality" placeholder="Main Speciality" class="form-control">
+            <input type="text" id="main_speicality" name="main_speicality" placeholder="Main specialty" class="form-control">
           </div>
         </div>      
         

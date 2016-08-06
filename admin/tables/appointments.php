@@ -60,7 +60,7 @@ require_once("../session.php");
                     <?php
                           $apps_query= "SELECT app.app_id, p.nat_id, p.pat_name ,m.med_id ,m.med_name, m.med_type, app.time_date,
                           m.phones, d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname ,s.spec_name
-                          FROM patient as p, medical as m, appointment as app, doctor as d, med_spec as ms, speciality as s
+                          FROM patient as p, medical as m, appointment as app, doctor as d, med_spec as ms, specialty as s
                           WHERE app.confirmed=0
                           AND app.pat_id = p.nat_id
                           AND app.med_id = m.med_id

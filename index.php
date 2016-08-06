@@ -1,5 +1,9 @@
 <?php
-require_once("header.html");
+require_once("session.php");
+if(!$loggedin)
+    require_once("header.html");
+else
+    require_once("profile/header.php");
 ?>
 
     <!--Slider-->

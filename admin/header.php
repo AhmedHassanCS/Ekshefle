@@ -1,6 +1,6 @@
 <?php
-include('session.php');
-include('notifications.php');
+require_once('session.php');
+require_once('notifications.php');
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +56,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <nav class="navbar navbar-static-top" role="navigation">
       <!-- Sidebar toggle button-->
       <!-- Navbar Right Menu -->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      
       <div class="pull-left" >
       
         <small class="logo">Admin Manager</small>
@@ -153,16 +160,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <span class="hidden-xs"><?php echo $_SESSION['login_user']; ?></span>
             </a>
             <ul class="dropdown-menu">
-              <!-- The user image in the menu -->
-              <!--<li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
-                </p>
-              </li>-->
-
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="row">

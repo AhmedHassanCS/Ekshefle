@@ -40,7 +40,7 @@ require_once("../session.php");
               <tbody>
                 <?php 
                     $doctors_query= "SELECT d.doc_fname, d.doc_sname ,d.doc_lname, d.doc_email, d.doc_phone ,d.doc_address ,s.spec_name
-                                      FROM doctor as d, speciality as s 
+                                      FROM doctor as d, specialty as s 
                                       where d.spec_id=s.spec_id";
 
                     $doctors=$db->query($doctors_query);

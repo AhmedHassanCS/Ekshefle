@@ -43,7 +43,13 @@ if(mysqli_num_rows($res_doc)==1){
                     VALUES ('$cont_code' ,$doc_id ,'$med_type' ,STR_TO_DATE('$start_date' ,'%Y-%m-%d'),STR_TO_DATE('$exp_date' ,'%Y-%m-%d'))";
         if(!$db->query($cont_query))
             echo "<h2>Error: ".$db->error."</h2>";
-        else echo $check_result["is_expired"];
+        else {
+            $update_active="UPDATE medical SET is_active=1 where doc_id=$doc_id and med_type='$med_type'";
+            if(!$db->query($update_active)){
+                echo "<h2>Error: ".$db->error."</h2>";
+            }
+            else header("location: /ekshefle/admin/");
+        }
     }
 }else echo "<h2>Error: No existing doctor with this username</h2>";
 ?>

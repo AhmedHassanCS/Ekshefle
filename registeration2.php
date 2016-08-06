@@ -199,10 +199,10 @@
 
 
 		<div class="control-group">
-		  <strong>Your Main Speciality</strong>
-          <!-- doc-main-speciality -->
+		  <strong>Your Main specialty</strong>
+          <!-- doc-main-specialty -->
           <div class="form-group">
-            <input type="text" id="main_speicality" name="main_speicality" placeholder="Main Speciality" class="form-control">
+            <input type="text" id="main_speicality" name="main_speicality" placeholder="Main specialty" class="form-control">
           </div>
         </div>		
 		
@@ -424,11 +424,19 @@ function check_fname()
 	}
 }
 
+$.ajax()
+{
+  
+}
 
 
 
-
-
+$.ajax({
+        type: "POST",
+        url:"http://localhost/ekshefle/nova/check_reg.php",
+        data:{doc_email: user},
+        success: function(data){alert(data);}
+        });
 
 
 
