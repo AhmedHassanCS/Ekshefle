@@ -35,7 +35,7 @@
     <link rel="apple-touch-icon-precomposed" href="/ekshefle/images/ico/apple-touch-icon-57-precomposed.png">
 </head>
 
-<body>
+<body >
 
 <!--Header-->
 <header class="navbar navbar-fixed-top">
@@ -46,31 +46,36 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </a>
-          <a id="logo" class="pull-left" href="/ekshefle/"></a>
+          <a id="logo" class="pull-left"  style="background:url(/ekshefle/images/logo-eng.png) no-repeat 0 50%;" href="/ekshefle/"></a>
           <div class="nav-collapse collapse pull-right">
               <ul class="nav">
-                  <li><a href="/ekshefle/"><h4>رئيسية</h4></a></li>
-                  <li><a href="about-us.html"><h4>معلومات</h4></a></li>
-                  <li><a href="services.html"><h4>خدمات</h4></a></li>
-                  <li><a href="contact-us.html"><h4>تواصل معنا</h4></a></li>
-                  <li><a href="contact-us.html"><h4>إحجز الأن</h4></a></li>
+                  <li><a href="/ekshefle/"><h5>Home</h5></a></li>
+                  <li><a href="about-us.html"><h5>About</h5></a></li>
+                  <li><a href="services.html"><h5>Services</h5></a></li>
+                  <li><a href="contact-us.html"><h5>Contact</h5></a></li>
+                  <li><a href="contact-us.html"><h5>Reservation</h5></a></li>
                   
                   <!-- User Account Menu --><!--.....................................-->
                     <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['loggedin_user'];?><i class="icon-angle-down"></i></a>
-                            <ul class="dropdown-menu" style="border:1px solid red;">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                              <h4><?php echo $_SESSION['loggedin_user']; ?>
+                                <i class="icon-angle-down"></i>
+                              </h4>
+                              </a>
+                            <ul class="dropdown-menu" style="border:4px solid grey;">
                                 <br>
-                                <li><a href="/ekshefle/profile/"><label>View Profile</label></a></li>
-                                <li><a href="#"><label>Edit Information</label></a></li>
-                                <li><a href="#"><label>Owned</label></a></li>
+                                <li><a href="/ekshefle/profile/"><h5>View Profile</h5></a></li>
+                                <li><a href="#"><h5>Edit Information</h5></a></li>
+                                <li><a href="#"><h5>Owned</h5></a></li>
                                 <br>
-                                <li class="user-footer">
+                                <li class="box-footer">
                                   <div class="text-center">
-                                    <a href="logout.php" class="btn btn-danger btn-flat">Sign out</a>
+                                    <a href="/ekshefle/profile/logout.php" class="btn btn-danger btn-flat">Sign out</a>
                                   <br>
                                   </div>
                                 </li>
                                 <br>
+                            </ul>
                       </li>
               </ul>        
                     

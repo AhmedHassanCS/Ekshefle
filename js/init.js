@@ -3,6 +3,16 @@ $(function () {
 //Initialize Select2 Elements
 $(".select2").select2();
 
+$('#datepicker').datepicker({
+  autoclose: true
+});
+/*
+//Datemask dd/mm/yyyy
+$("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+//Datemask2 mm/dd/yyyy
+$("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+//Date picker
+*/
 //iCheck for checkbox and radio inputs
 $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
   checkboxClass: 'icheckbox_minimal-blue',

@@ -1,4 +1,5 @@
 <?php
+require_once('db/config.php');
 require_once("header.html");
 ?>
 
@@ -16,30 +17,40 @@ require_once("header.html");
 <section id="registration-page" class="container">
     <div class="box box-success">
       <div class="box-header with-border">
-        <h3>Registration Form</h3>
+        <h3>Registration Form<br><small>This is your personal data, after registeration you'll be abl to add clinics, hospitals or labs and you will be able to publish them.</small></h3>
       </div>
 
       <div class="box-body">
 
         <!--Email-->
-        <div class="form-group">
+        <div class="form-group"  id="email_cont">
           <h4>Email</h4>
-          <input type="email" id="email" class="form-control" required="required" placeholder="someone@example.com">
+          <input type="email" id="email" class="form-control" required="required" placeholder="someone@example.com" onblur="check_email();">
+          <span class="help-block" id="email_error"></span>
         </div>
         <br>
 
         <!--Name-->
         <div class="form-group">
-          <h4>Name</h4>
-          <input type="text" id="fname" class="form-control" pattern="[ء-ي ]*" required="required" placeholder="First Name">
-          <input type="text" id="sname" class="form-control" pattern="[ء-ي ]*" required="required" placeholder="Middle Name">
-          <input type="text" id="lname"class="form-control" pattern="[ء-ي ]*" required="required" placeholder="Last Name">
+          <h4>Name بالعربي</h4>
+          <div class="form-group" id="fname_cont">
+            <input type="text" id="fname" class="form-control" pattern="[ء-ي ]*" required="required" placeholder="First Name" onblur="check_fname();">
+            <span class="help-block" id="fname_error"></span>
+          </div>
+          <div class="form-group" id="sname_cont">
+            <input type="text" id="sname" class="form-control" pattern="[ء-ي ]*" required="required" placeholder="Middle Name" onblur="check_sname();">
+            <span class="help-block" id="sname_error"></span>
+          </div>
+          <div class="form-group" id="lname_cont">
+            <input type="text" id="lname"class="form-control" pattern="[ء-ي ]*" required="required" placeholder="Last Name" onblur="check_lname();">
+            <span class="help-block" id="lname_error"></span>
+          </div>
         </div>
         <br>
 
         <!--Nickname-->
         <div class="form-group">
-          <h4>Nickname (Optional)</h4>
+          <h4>Nickname (Optional)بالعربي</h4>
           <input type="text" id="nickname" class="form-control" pattern="[ء-ي ]*" placeholder="Nickname">
         </div>
         <br>
@@ -47,21 +58,37 @@ require_once("header.html");
         <!--Password-->
         <div class="form-group">
           <h4>Choose Password</h4>
-          <input type="password" id="pw" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-          <input type="password" id="pw_confirm" class="form-control" placeholder="Repeat Password">
+          <div class="form-group"  id="pw_cont">
+            <input type="password" id="pw" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  onblur="check_pw(); check_cpw();">
+            <span class="help-block" id="pw_error"></span>
+          </div>
+          <div class="form-group"  id="cpw_cont">
+            <input type="password" id="pw_confirm" class="form-control" placeholder="Repeat Password" onblur="check_cpw();">
+            <span class="help-block" id="cpw_error"></span>
+          </div>
         </div>
         <br>
 
         <!--Gender-->
-        <div class="form-group">
+        <div class="form-group" id="gender">
           <h4>Gender</h4>
           <label><input type="radio" id="gender_m" name="gender" class="flat-red" value="male" checked>Male<br></label>
           <label><input type="radio" id="gender_f" name="gender" class="flat-red" value="female">Female</label>
+          <span class="help-block" id="gender_error"></span>
         </div>
         <br>
 
+        <!--birthdate-->
+        <div class="form-group" id="birth_cont">
+          <h4>Birth-Date:</h4>
+          <div class="input-group date">
+            <input type="text" class="form-control" id="datepicker" onblur="check_birthdate()" onchange="check_birthdate()">
+            <span class="help-block" id="birth_error"></span>
+          </div>
+        </div>
+
         <!--Degree-->
-        <div class="form-group">
+        <div class="form-group"  id="deg">
           <h4>Current Degree</h4>
           <select id="degree" class="form-control select2">
               <option></option>
@@ -73,46 +100,41 @@ require_once("header.html");
               <option>أستاذ مساعد</option>
               <option>أستاذ دكتور</option>
           </select>
+          <span class="help-block" id="deg_error"></span>
         </div>
         <br>
 
         <!--Specialty This will be edited to bring specialties from db-->
-        <div class="form-group">
+        <div class="form-group" id="specialty">
           <h4>Main Specialty</h4>
           <select id="spec" class="form-control select2">
             <option></option>
-            <option>أطفال</option>
-            <option>نساء وتوليد</option>
-            <option>عظام</option>
-            <option>مخ و أعصاب</option>
-            <option>أنف وإذن وحنجرة</option>
-            <option>رمد</option>
-            <option>أسنان</option>
-            <option>باطنة</option>
-            <option>أورام</option>
-            <option>جلدية</option>
-            <option>نفسية وعصبية</option>
-            <option>قلب</option>
-            <option>أوعية دموية</option>
-            <option>جراحة عامة</option>
-            <option>جراحة أورام</option>
-            <option>جراحة عمود فقري</option>
-            <option>علاج طبيعي</option>
+            <?php
+            $spec_sql="SELECT spec_name from specialty";
+            $spec_result=$db->query($spec_sql);
+            while($spec = $spec_result->fetch_assoc())
+            {
+              echo "<option>".$spec["spec_name"]."</option>";
+            }
+            ?>
           </select>
+          <span class="help-block" id="spec_error"></span>
         </div>
         <br>
 
         <!--Phone-->
-        <div class="form-group">
+        <div class="form-group" id="ph_cont">
           <h4>Private Phone Number</h4>
           <input type="text" id="phone" class="form-control" placeholder="01.............">
+          <span class="help-block" id="ph_error"></span>
         </div>
         <br>
 
         <!--Address-->
-        <div class="form-group">
-          <h4>Home Address (In Arabic)</h4>
-          <input type="text" id="address" class="form-control" placeholder="المحافظة - المركز أو القرية - المنطقة - الشارع - رقم المنزل" style="width:37%;">
+        <div class="form-group" id="address_cont">
+          <h4>Home Address بالعربي</h4>
+          <input type="text" id="address" class="form-control" placeholder="المحافظة - المركز أو القرية - المنطقة - الشارع - رقم المنزل" style="width:37%;" onblur("check_address();")>
+          <span class="help-block" id="address_error"></span>
         </div>
         <br>
 
@@ -152,53 +174,13 @@ require_once("footer.html");
 ?>
 
 <script src="js/vendor/jquery-1.9.1.min.js"></script>
-<script>
-function submit()
-{
-
-    var x= $("#side_spec").val();
-
-    var side="";
-    
-    if(x!=null){
-    side=x[0];
-    for(var i=1;i<x.length;i++)
-      side+=","+x[i];
-    }
-
-    $.ajax({
-        type: "POST",
-        url:"http://localhost/ekshefle/check_reg.php",
-        data:{doc_email: document.getElementById("email").value,
-              doc_fname: document.getElementById("fname").value,
-              doc_sname: document.getElementById("sname").value,
-              doc_lname: document.getElementById("lname").value,
-              doc_nick: document.getElementById("nickname").value,
-              doc_pw: document.getElementById("pw").value,
-              doc_pw_confirm: document.getElementById("pw_confirm").value,
-              gender: gender,
-              degree: document.getElementById("degree").value,
-              doc_phone: document.getElementById("phone").value,
-              birth_date: "1994-10-19",
-              doc_address: document.getElementById("address").value,
-              bio: document.getElementById("bio").value,
-              side_spec:side,
-              specialty :document.getElementById("spec").value
-              },
-        success: function(data){
-                  if(data!="1")
-                    alert(data);
-                  else window.open("http://localhost/ekshefle/profile/","_self");
-                }
-        });
-}
-</script>
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="admin/plugins/select2/select2.full.min.js"></script>
 <script src="admin/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script src="admin/plugins/iCheck/icheck.min.js"></script>
 <script src="js/main.js"></script>
-<script src="js/select-init.js"></script>
+<script src="js/init.js"></script>
+<script src="js/reg_validations.js"></script>
 
 </body>
 </html>

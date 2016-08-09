@@ -2,7 +2,7 @@
 require_once('db/config.php');
 require_once('validation.php');
 require_once('test_input.php');
-
+require_once('send_email.php');
     //checking that key is set
     if(isset($_POST['doc_email']) && isset($_POST['doc_pw']) && isset($_POST['doc_pw_confirm']) &&  
         isset($_POST['doc_fname']) && isset($_POST['doc_sname']) && isset($_POST['doc_lname']) && 
@@ -21,30 +21,52 @@ require_once('test_input.php');
         else{
 
                 //getting safe data for sql
-                $doc_email = test_input($_POST['doc_email']);
-                $doc_pw = test_input($_POST['doc_pw']);
-                $doc_pw_confirm = test_input($_POST['doc_pw_confirm']);
-                $doc_fname = test_input($_POST['doc_fname']); 
-                $doc_sname = test_input($_POST['doc_sname']);
-                $doc_lname = test_input($_POST['doc_lname']);
-                $birth_date = test_input($_POST['birth_date']);
-                $doc_phone = test_input($_POST['doc_phone']);
-                $gender = test_input($_POST['gender']);
-                $doc_address = test_input($_POST['doc_address']);
-                $degree = test_input($_POST['degree']);
-                $specialty = test_input($_POST['specialty']);
+                $doc_email = mysqli_real_escape_string($db,$_POST['doc_email']);
+                $doc_pw = mysqli_real_escape_string($db,$_POST['doc_pw']);
+                $doc_pw_confirm = mysqli_real_escape_string($db,$_POST['doc_pw_confirm']);
+                $doc_fname = mysqli_real_escape_string($db,$_POST['doc_fname']); 
+                $doc_sname = mysqli_real_escape_string($db,$_POST['doc_sname']);
+                $doc_lname = mysqli_real_escape_string($db,$_POST['doc_lname']);
+                $birth_date = mysqli_real_escape_string($db,$_POST['birth_date']);
+                $doc_phone = mysqli_real_escape_string($db,$_POST['doc_phone']);
+                $gender = mysqli_real_escape_string($db,$_POST['gender']);
+                $doc_address = mysqli_real_escape_string($db,$_POST['doc_address']);
+                $degree = mysqli_real_escape_string($db,$_POST['degree']);
+                $specialty = mysqli_real_escape_string($db,$_POST['specialty']);
+
+                $doc_email = test_input($doc_email);
+                $doc_pw = test_input($doc_pw);
+                $doc_pw_confirm = test_input($doc_pw_confirm);
+                $doc_fname = test_input($doc_fname); 
+                $doc_sname = test_input($doc_sname);
+                $doc_lname = test_input($doc_lname);
+                $birth_date = test_input($birth_date);
+                $doc_phone = test_input($doc_phone);
+                $gender = test_input($gender);
+                $doc_address = test_input($doc_address);
+                $degree = test_input($degree);
+                $specialty = test_input($specialty);
 
                 //preparing optional data
                 if(isset($_POST['doc_nick']))
-                    $doc_nick= test_input($_POST['doc_nick']);
+                {
+                    $doc_nick= mysqli_real_escape_string($db,$_POST['doc_nick']);
+                    $doc_nick= test_input($doc_nick);
+                }
                 else $doc_nick=null;
 
                 if(isset($_POST['side_spec']))
-                    $side_spec= test_input($_POST['side_spec']);
+                {
+                    $side_spec= mysqli_real_escape_string($db,$_POST['side_spec']);
+                    $side_spec= test_input($side_spec);
+                }
                 else $side_spec=null;
 
                 if(isset($_POST['bio']))
-                    $bio= test_input($_POST['bio']);
+                {
+                    $bio= mysqli_real_escape_string($db,$_POST['bio']);
+                    $bio= test_input($bio);
+                }
                 else $bio=null;
 
                 //validations
@@ -95,19 +117,26 @@ require_once('test_input.php');
                         $spec_row= $get_spec->fetch_assoc();
                         $spec_id=$spec_row["spec_id"];
                         
+                        //creating hash
+                        $hash = md5( rand(0,1000) );
                         //inserting doctor into database
                         $insert_doctor="INSERT into doctor
                                         (doc_email,doc_pw,doc_fname,doc_sname,doc_lname,birth_date,doc_phone,
-                                            gender,doc_address,degree,doc_nick,side_spec,bio,spec_id)
+                                            gender,doc_address,degree,doc_nick,side_spec,bio,spec_id,hash)
                                         values('$doc_email',sha1('$doc_email$doc_pw'),'$doc_fname',
-                                                '$doc_sname','$doc_lname',STR_TO_DATE('$birth_date' ,'%Y-%m-%d'),
+                                                '$doc_sname','$doc_lname',
+                                                STR_TO_DATE('$birth_date' ,'%m/%d/%Y'),
                                                 '$doc_phone','$gender','$doc_address','$degree','$doc_nick',
-                                                '$side_spec','$bio',$spec_id)";
+                                                '$side_spec','$bio',$spec_id,'$hash')";
                         if(!$db->query($insert_doctor))
-                            echo $db->error;
+                            echo "Database Error: ".$db->error.$birth_date;
                         else {
-                            $_SESSION['loggedin_user'] = $doc_email;
-                            echo "1";
+                                if(send_email($doc_email,$hash))
+                                    echo "1";
+                                else {
+                                    echo "Error sending verification e-mail";
+                                    $db->query("DELETE from doctor where doc_email='$doc_email'");
+                                }
                         }
                     }//insertion ends
                 }//existance and insertion ends

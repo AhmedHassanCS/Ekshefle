@@ -14,9 +14,13 @@ else
         <div class="sl-slider">
             <!--Slider Item1-->
             <div class="sl-slide item1" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
-                <div class="sl-slide-inner">
-
-                        <img src="images/sample/slider/img1.png" style="width:100%; height:100%;"> <h3>Live Healthy</h3></img>
+                <div class="sl-slide-inner" style="background: #fff;">
+                    <div class="container" style="background: #fff;">
+                        <img class="pull-right" src="images/sample/slider/img1.png" alt=""/>
+                        <h2 style="color:#000;">هنا ستجد ضالتك</h2>
+                        <h3 class="gap" style="color:#000;">يمكنك البحث بواسطة المكان والتخصص وإسم الدكتور وسعر الكشف</h3>
+                        <button type="button" class="btn btn-large" style="color:#000; border:2px solid black;" href="#">إحجز الأن</button>
+                    </div>
                 </div>
             </div>
             <!--/Slider Item1-->
@@ -24,11 +28,11 @@ else
             <!--Slider Item2-->
             <div class="sl-slide item2" data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1.5">
                 <div class="sl-slide-inner">
-                    <div class="container">
+                    <div class="container" >
                         <img class="pull-right" src="images/sample/slider/img2.png" alt="" />
-                        <h2>Planning &amp; Analysis</h2>
-                        <h3 class="gap">Aenean ultricies mi vitast</h3>
-                        
+                        <h2>لا تنتظر من يدلك ولا تسأل عن الطريق</h2>
+                        <h3 class="gap">سنحجز لك أينما كنت</h3>
+                        <a class="btn btn-large btn-transparent" href="#">إحجز الأن</a>
                     </div>
                 </div>
             </div>
@@ -36,12 +40,12 @@ else
 
             <!--Slider Item3-->
             <div class="sl-slide item3" data-orientation="horizontal" data-slice1-rotation="3" data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
-                <div class="sl-slide-inner">
-                   <div class="container">
-                    <img class="pull-right" src="images/sample/slider/img3.png" alt="" />
-                    <h2>Unique Solutions</h2>
-                    <h3 class="gap">Breatures who have been utterly</h3>
-                    
+                <div class="sl-slide-inner" style="background: #fff;">
+                   <div class="container" style="background: #fff;">
+                    <img class="pull-right" src="images/sample/slider/heart_rate.gif" alt="" />
+                    <h2 style="color:#000;">صحتك تهمنا</h2>
+                    <h3 class="gap" style="color:#000;">سنصلك للطبيب المناسب</h3>
+                    <button type="button" class="btn btn-large" style="color:#000; border:2px solid black;" href="#">إحجز الأن</button>
                 </div>
             </div>
         </div>

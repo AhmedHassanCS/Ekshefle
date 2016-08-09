@@ -2,6 +2,7 @@
 $error="";
 function validate_email($email)
 {
+    global $error;
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error= "Error: Only letters and white space allowed in names";
         return false;
@@ -11,8 +12,9 @@ function validate_email($email)
 
 function validate_name($name)
 {
-   if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
-        $error="Error: Invalid email format";
+    global $error;
+   if (!preg_match("/^[\s\p{Arabic}]+$/u",$name)) {
+        $error="Error: Invalid Name";
         return false;
     }
     else return true;
@@ -21,6 +23,7 @@ function validate_name($name)
 
 function validate_password($pass,$con_pass)
 {
+    global $error;
     if($pass == $con_pass) {
 
         if (strlen($pass) < '8') {
@@ -49,6 +52,7 @@ function validate_password($pass,$con_pass)
 
 function validate_phone($phone)
 {
+    global $error;
    if (!preg_match("/^01[0-9]{9}$/",$phone)) {
         $error="Error: Invalid phone number!";
         return false;

@@ -2,29 +2,34 @@
 require_once("../session.php");
 
 if(!$loggedin)
-    header("/ekshefle/");
-
-require_once("header.php");
+    header("location: /ekshefle/");
+else 
+    require_once("header.php");
 ?>
-<section class="container">
-</section>
+
+<div class="content-wrapper">
 <?php
+require_once("check_verified.php");
+if($verified)
+    require_once("default.php");
+?>
+</div>
+
+<?php
+if($verified)
+{
+    require_once("sidebar.php");
+}
 require_once("../footer.html");
 ?>
-
 
 <script src="/ekshefle/js/vendor/jquery-1.9.1.min.js"></script>
 <script src="/ekshefle/js/vendor/bootstrap.min.js"></script>
 <script src="/ekshefle/js/main.js"></script>
+<script src="/ekshefle/admin/dist/js/app.min.js"></script>
+
 <!-- Required javascript files for Slider -->
 
-<script src="/ekshefle/admin/dist/js/app.min.js"></script>
-<script src="/ekshefle/admin/dist/js/demo.js"></script>
-
-
-<script src="/ekshefle/js/slider.js"></script>
-<script src="/ekshefle/js/jquery.ba-cond.min.js"></script>
-<script src="/ekshefle/js/jquery.slitslider.js"></script>
 
 </body>
 </html>

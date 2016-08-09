@@ -1,6 +1,6 @@
 .sl-slider-wrapper {
 	width: 100%;
-	height: 520px;
+	height: 600px;
 	position: relative;
 	overflow: hidden;
 }
@@ -148,7 +148,7 @@
 	display: block;
 	line-height: 80px;
 	font-size: 48px;
-	color: rgba(255,255,255,.3);
+	color: 	#E0E0E0;
 	text-align: center;
 	cursor: pointer;
 	-webkit-transition: 300ms;
@@ -158,7 +158,7 @@
 	transition: 300ms;
 }
 .nav-arrows span:hover {
-	color: #fff;	
+	color: #707070 ;	
 }
 .nav-arrows span.nav-arrow-prev {
 	left: 0;

@@ -1,5 +1,3 @@
-<script>
-
 function check_email()
 {
 	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -33,13 +31,6 @@ function check_email()
 	}
 }
 
-
-
-
-
-
-
-
 function check_fname()
 {
 	var re = /^[ء-ي]+$/;
@@ -67,20 +58,12 @@ function check_fname()
 		var user_cont= document.getElementById('fname_cont');
 		var user_error= document.getElementById('fname_error');
 		user_cont.className ='form-group has-error';
-		user_error.innerHTML="invalid name";
+		user_error.innerHTML="Invalid name: it must be arabic";
 		return false;
 	}
 	
 }
-	
 
-
-	
-	
-	
-	
-	
-	
 function check_sname()
 {
 	var re = /^[ء-ي]+$/;
@@ -108,19 +91,11 @@ function check_sname()
 		var user_cont= document.getElementById('sname_cont');
 		var user_error= document.getElementById('sname_error');
 		user_cont.className ='form-group has-error';
-		user_error.innerHTML="invalid name";
+		user_error.innerHTML="Invalid name: it must be arabic";
 		return false;
 	}
 	
 }
-	
-	
-
-	
-	
-	
-	
-
 
 function check_lname()
 {
@@ -149,24 +124,16 @@ function check_lname()
 		var user_cont= document.getElementById('lname_cont');
 		var user_error= document.getElementById('lname_error');
 		user_cont.className ='form-group has-error';
-		user_error.innerHTML="invalid name";
+		user_error.innerHTML="Invalid name: it must be arabic";
 		return false;
 	}
 	
 }
 
-
-	
-	
-	
-
-	
-	
-	
 function check_pw()
 {
 	//var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{8,}$/;
-	var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+	var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 	var user= document.getElementById('pw').value;
 	if(user == null || user == "")
 	{
@@ -182,7 +149,7 @@ function check_pw()
 		var user_cont= document.getElementById('pw_cont');
 		user_cont.className ='form-group has-success';
 		var user_error= document.getElementById('pw_error');
-		user_error.innerHTML="good password";
+		user_error.innerHTML="Accepted Password";
 		return true;
 	}
 
@@ -191,20 +158,11 @@ function check_pw()
 		var user_cont= document.getElementById('pw_cont');
 		var user_error= document.getElementById('pw_error');
 		user_cont.className ='form-group has-error';
-		user_error.innerHTML="password should be more than 8 characters and have at least one number, one lowercase and one uppercase letter";
+		user_error.innerHTML="password should be more than 8 characters\nMust contain at least one number, one lowercase and one uppercase letter";
 		return false;
 	}
 	
 }
-
-
-
-
-
-
-
-
-
 
 function check_cpw()
 {
@@ -217,7 +175,7 @@ function check_cpw()
 		var user_cont= document.getElementById('cpw_cont');
 		var user_error= document.getElementById('cpw_error');
 		user_cont.className ='form-group has-error';
-		user_error.innerHTML="Confirming Password is required";
+		user_error.innerHTML="Password Confirmation is required";
 		return false;
 	}
 	
@@ -226,7 +184,7 @@ function check_cpw()
 		var user_cont= document.getElementById('cpw_cont');
 		user_cont.className ='form-group has-success';
 		var user_error= document.getElementById('cpw_error');
-		user_error.innerHTML="passwords are matched";
+		user_error.innerHTML="Passwords matching";
 		return true;
 	}
 	else 
@@ -234,20 +192,11 @@ function check_cpw()
 		var user_cont= document.getElementById('cpw_cont');
 		var user_error= document.getElementById('cpw_error');
 		user_cont.className ='form-group has-error';
-		user_error.innerHTML="Passwords are not matched ";
+		user_error.innerHTML="Passwords are not matching ";
 		return false;
 	}
 		
 }
-
-
-
-
-
-
-
-
-
 
 function check_gender()
 {
@@ -269,20 +218,10 @@ function check_gender()
 		var user_error= document.getElementById('gender_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="you should select gender";
-		return false;
-		
+		return false;		
 	}	
 
 }	
-
-
-
-
-
-
-
-
-
 
 function check_degree()
 {
@@ -293,7 +232,7 @@ function check_degree()
 		var user_error= document.getElementById('deg_error');
 		user_cont.className ='form-group has-success';
 		user_error.innerHTML=" ";
-		return user.value;
+		return true;
 	}
 	
 	else
@@ -308,15 +247,6 @@ function check_degree()
 	
 }	
 
-
-
-
-
-
-
-
-
-
 function check_spec()
 {
 	var user= document.getElementById('spec');
@@ -326,7 +256,7 @@ function check_spec()
 		var user_error= document.getElementById('spec_error');
 		user_cont.className ='form-group has-success';
 		user_error.innerHTML=" ";
-		return user.value;
+		return true;
 	}
 	else
 	{
@@ -339,12 +269,6 @@ function check_spec()
 	}
 	
 }
-
-
-
-
-
-
 
 function check_phone()
 {
@@ -379,17 +303,9 @@ function check_phone()
 	
 }	
 
-
-
-
-
-
-
-
-
 function check_address()
 {
-	var re = /[\u0600-\u06FF]/;
+	var re = /^[ء-ي ]+$/;
 	var user= document.getElementById('address').value;
 	if(user == null || user == "")
 	{
@@ -419,20 +335,79 @@ function check_address()
 	}
 	
 }	
+function check_birthdate()
+{
+	var re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+	var user= document.getElementById('datepicker').value;
+	if(user == null || user == "")
+	{
+		var user_cont= document.getElementById('birth_cont');
+		var user_error= document.getElementById('birth_error');
+		user_cont.className ='form-group has-error';
+		user_error.innerHTML="birth-date is required";
+		return false;
+	}
+	
+	else if (re.test(user))
+	{
+		var user_cont= document.getElementById('birth_cont');
+		user_cont.className ='form-group has-success';
+		var user_error= document.getElementById('birth_error');
+		user_error.innerHTML="";
+		return true;
+	}
 
-</script>
+	else
+	{
+		var user_cont= document.getElementById('birth_cont');
+		var user_error= document.getElementById('birth_error');
+		user_cont.className ='form-group has-error';
+		user_error.innerHTML="invalid date";
+		return false;
+	}
+	
+}	
 
-		
-		
+function submit()
+{
+  if( check_email() && check_fname() && check_sname() && check_lname() && check_pw() && check_cpw() && check_degree() &&
+      check_spec() && check_phone() && check_address() && check_gender() && check_birthdate() )
+    {
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+    var gender= check_gender();
+
+    var side_cont= $("#side_spec").val();
+    var side="";
+    if(side_cont!=null){
+    side=side_cont[0];
+    for(var i=1;i<side_cont.length;i++)
+      side+=","+side_cont[i];
+    }
+
+    $.ajax({
+        type: "POST",
+        url:"http://localhost/ekshefle/check_reg.php",
+        data:{doc_email: document.getElementById("email").value,
+              doc_fname: document.getElementById("fname").value,
+              doc_sname: document.getElementById("sname").value,
+              doc_lname: document.getElementById("lname").value,
+              doc_nick: document.getElementById("nickname").value,
+              doc_pw: document.getElementById("pw").value,
+              doc_pw_confirm: document.getElementById("pw_confirm").value,
+              gender: gender,
+              degree: document.getElementById("degree").value,
+              doc_phone: document.getElementById("phone").value,
+              birth_date: document.getElementById('datepicker').value,
+              doc_address: document.getElementById("address").value,
+              bio: document.getElementById("bio").value,
+              side_spec:side,
+              specialty :document.getElementById("spec").value
+              },
+        success: function(data){
+                  if(data!="1")
+                    alert(data);
+                  else { alert("You registered successfully. Now login please!"); window.open("http://localhost/ekshefle/","_self");}
+                }
+        });
+  }
+}
