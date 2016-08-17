@@ -1,5 +1,5 @@
 <?php
-   require_once('db/config.php');
+   require_once('/../db/config.php');
    session_start();
 
    $loggedin=false;

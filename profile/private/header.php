@@ -1,3 +1,7 @@
+<?php
+if(!$loggedin)
+  header("location: /ekshefle/");
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -18,9 +22,10 @@
 
     <link rel="stylesheet" href="/ekshefle/admin/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="/ekshefle/admin/bootstrap/fonts/font-awesome-4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/ekshefle/admin/plugins/datepicker/datepicker3.css">
     <link rel="stylesheet" href="/ekshefle/admin/plugins/iCheck/all.css">
+    <link rel="stylesheet" href="/ekshefle/admin/plugins/timepicker/bootstrap-timepicker.min.css">
     <link rel="stylesheet" href="/ekshefle/admin/plugins/select2/select2.min.css">
-    <link rel="stylesheet" href="/ekshefle/admin/dist/css/skins/skin-blue.min.css">
 
 
 
@@ -35,7 +40,7 @@
     <link rel="apple-touch-icon-precomposed" href="/ekshefle/images/ico/apple-touch-icon-57-precomposed.png">
 </head>
 
-<body >
+<body>
 
 <!--Header-->
 <header class="navbar navbar-fixed-top">
@@ -48,7 +53,7 @@
           </a>
           <a id="logo" class="pull-left"  style="background:url(/ekshefle/images/logo-eng.png) no-repeat 0 50%;" href="/ekshefle/"></a>
           <div class="nav-collapse collapse pull-right">
-              <ul class="nav">
+              <ul class="nav navbar-nav">
                   <li><a href="/ekshefle/"><h5>Home</h5></a></li>
                   <li><a href="about-us.html"><h5>About</h5></a></li>
                   <li><a href="services.html"><h5>Services</h5></a></li>
@@ -56,27 +61,23 @@
                   <li><a href="contact-us.html"><h5>Reservation</h5></a></li>
                   
                   <!-- User Account Menu --><!--.....................................-->
-                    <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                              <h4><?php echo $_SESSION['loggedin_user']; ?>
-                                <i class="icon-angle-down"></i>
-                              </h4>
-                              </a>
-                            <ul class="dropdown-menu" style="border:4px solid grey;">
-                                <br>
-                                <li><a href="/ekshefle/profile/"><h5>View Profile</h5></a></li>
-                                <li><a href="#"><h5>Edit Information</h5></a></li>
-                                <li><a href="#"><h5>Owned</h5></a></li>
-                                <br>
-                                <li class="box-footer">
-                                  <div class="text-center">
-                                    <a href="/ekshefle/profile/logout.php" class="btn btn-danger btn-flat">Sign out</a>
-                                  <br>
-                                  </div>
-                                </li>
-                                <br>
-                            </ul>
-                      </li>
+                  <li class="dropdown text-center">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <span class="hidden-xs"><?php echo $_SESSION['loggedin_user']; ?>
+                        <i class="icon-angle-down"></i>
+                      </span>
+                    </a>
+                    <ul class="dropdown-menu" style="box-shadow: 0 0 4px 4px #222;">
+                        <li class="box-body">
+                          <br>
+                        <a href="/ekshefle/profile/"><h4><i class="fa fa-user-md"></i>  PROFILE</h4></a>
+                        </li>
+                        <li class="box-footer">
+                            <a href="/ekshefle/profile/logout.php" class="btn btn-danger" style="color:#333">Sign out</a>
+                        </li>
+                        <br>
+                    </ul>
+                  </li>
               </ul>        
                     
           </div><!--/.nav-collapse -->

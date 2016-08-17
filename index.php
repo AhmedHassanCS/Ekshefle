@@ -1,9 +1,10 @@
 <?php
-require_once("session.php");
+require_once("private/session.php");
+
 if(!$loggedin)
-    require_once("header.html");
+    require_once("private/header.html");
 else
-    require_once("profile/header.php");
+    require_once("profile/private/header.php");
 ?>
 
     <!--Slider-->
@@ -68,7 +69,7 @@ else
 
 
 <?php
-require_once("footer.html");
+require_once("private/footer.html");
 ?>
 
 

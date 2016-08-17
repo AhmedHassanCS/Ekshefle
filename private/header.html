@@ -10,28 +10,27 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/sl-slide.css">
+    <link rel="stylesheet" href="/ekshefle/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/ekshefle/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/ekshefle/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/ekshefle/css/main.css">
+    <link rel="stylesheet" href="/ekshefle/css/sl-slide.css">
 
-    <link rel="stylesheet" href="admin/plugins/datepicker/datepicker3.css">
-    <link rel="stylesheet" href="admin/dist/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="admin/bootstrap/fonts/font-awesome-4.6.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="admin/plugins/iCheck/all.css">
-    <link rel="stylesheet" href="admin/plugins/select2/select2.min.css">
+    <link rel="stylesheet" href="/ekshefle/admin/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/ekshefle/admin/bootstrap/fonts/font-awesome-4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/ekshefle/admin/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="/ekshefle/admin/plugins/iCheck/all.css">
+    <link rel="stylesheet" href="/ekshefle/admin/plugins/select2/select2.min.css">
 
 
-
-    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="/ekshefle/js/login.js"></script>
+    <script src="/ekshefle/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/ekshefle/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/ekshefle/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/ekshefle/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/ekshefle/images/ico/apple-touch-icon-57-precomposed.png">
 </head>
 
 <body>
@@ -43,15 +42,13 @@
         </div>
         <!--Modal Body-->
         <div class="modal-body">
-            <form class="form-inline" action="login.php" method="post" id="form-login">
-                <input type="text" class="input-small" name="email" placeholder="Email">
-                <input type="password" class="input-small" name="pw" placeholder="Password">
-                <label class="checkbox">
-                    <input name="remme" type="checkbox"> Remember me
-                </label>
-                <button type="submit" class="btn btn-success">Sign in</button>
-            </form>
-            <a href="#">Forgot your password?</a>
+            <div class="form-group">
+                <input type="text" class="input-small" name="email" id="login_email" placeholder="Email">
+                <input type="password" class="input-small" name="pw" id="login_pw" placeholder="Password">
+                <button type="submit" class="btn btn-success" onclick="login();">Sign in</button>
+                <span class="help-block" id="login_error" style="color:red"></span>
+                <a href="#">Forgot your password?</a>
+            </div>
         </div>
         <!--/Modal Body-->
     </div>

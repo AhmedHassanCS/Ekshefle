@@ -1,11 +1,11 @@
 <?php 
-require_once("session.php");
-require_once("test_input.php");
+require_once("private/session.php");
+
+require_once("private/test_input.php");
 //require header
 if(!$loggedin)
-    require_once("header.html");
-else
-    require_once("profile/header.php");
+     require_once("private/header.html");
+else require_once("profile/private//header.php");
 
 $error="";
 //make sure data is set and not empty

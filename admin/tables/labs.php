@@ -44,7 +44,8 @@ require_once("../session.php");
                   $lab_query="SELECT m.med_id, m.med_name, m.phones, addr.detailed_add, d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname,m.is_active
                               from medical as m, doctor as d, address as addr
                               where m.med_id=addr.med_id
-                              and d.doc_id=m.doc_id";
+                              and d.doc_id=m.doc_id
+                              and m.med_type='Lab'";
                   
                   $labs=$db->query($lab_query);
                   while($row = $labs->fetch_assoc()) {

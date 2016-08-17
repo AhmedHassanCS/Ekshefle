@@ -1,6 +1,6 @@
 <?php
 require_once('db/config.php');
-require_once("header.html");
+require_once("private/header.html");
 ?>
 
   <!-- /#registration-page -->
@@ -142,15 +142,7 @@ require_once("header.html");
         <!--Side Specialties-->
         <div class="form-group">
             <h4>Side Specialties (Optional)</h4>
-            <select class="select2" id="side_spec" multiple="multiple" data-placeholder="Select specialty" style="width: 40%;">
-              <option>Alabama</option>
-              <option>Alaska</option>
-              <option>California</option>
-              <option>Delaware</option>
-              <option>Tennessee</option>
-              <option>Texas</option>
-              <option>Washington</option>
-            </select>
+            <input id="side_spec" data-placeholder="..... فرعي 1 - فرعي 2 - فرعي 3 " style="width: 40%;">
         </div>
         <br>
 
@@ -170,7 +162,7 @@ require_once("header.html");
 </section>
 
 <?php
-require_once("footer.html");
+require_once("/private/footer.html");
 ?>
 
 <script src="js/vendor/jquery-1.9.1.min.js"></script>

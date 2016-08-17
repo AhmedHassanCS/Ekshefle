@@ -1,5 +1,7 @@
 <?php
-$verified=false;
+if(!$loggedin)
+  header("location: /ekshefle/");
+
 $doc_email=$_SESSION['loggedin_user'];
 $sql_get_user="SELECT is_verified from doctor where doc_email='$doc_email'";
 $get_user=$db->query($sql_get_user);

@@ -305,7 +305,7 @@ function check_phone()
 
 function check_address()
 {
-	var re = /^[ء-ي ]+$/;
+	var re = /^[ء-ي0-9٠-٩-, ]+$/;
 	var user= document.getElementById('address').value;
 	if(user == null || user == "")
 	{
@@ -374,40 +374,32 @@ function submit()
       check_spec() && check_phone() && check_address() && check_gender() && check_birthdate() )
     {
 
-    var gender= check_gender();
+	    var gender= check_gender();
 
-    var side_cont= $("#side_spec").val();
-    var side="";
-    if(side_cont!=null){
-    side=side_cont[0];
-    for(var i=1;i<side_cont.length;i++)
-      side+=","+side_cont[i];
-    }
-
-    $.ajax({
-        type: "POST",
-        url:"http://localhost/ekshefle/check_reg.php",
-        data:{doc_email: document.getElementById("email").value,
-              doc_fname: document.getElementById("fname").value,
-              doc_sname: document.getElementById("sname").value,
-              doc_lname: document.getElementById("lname").value,
-              doc_nick: document.getElementById("nickname").value,
-              doc_pw: document.getElementById("pw").value,
-              doc_pw_confirm: document.getElementById("pw_confirm").value,
-              gender: gender,
-              degree: document.getElementById("degree").value,
-              doc_phone: document.getElementById("phone").value,
-              birth_date: document.getElementById('datepicker').value,
-              doc_address: document.getElementById("address").value,
-              bio: document.getElementById("bio").value,
-              side_spec:side,
-              specialty :document.getElementById("spec").value
-              },
-        success: function(data){
-                  if(data!="1")
-                    alert(data);
-                  else { alert("You registered successfully. Now login please!"); window.open("http://localhost/ekshefle/","_self");}
-                }
-        });
+	    $.ajax({
+	        type: "POST",
+	        url:"http://localhost/ekshefle/check_reg.php",
+	        data:{doc_email: document.getElementById("email").value,
+	              doc_fname: document.getElementById("fname").value,
+	              doc_sname: document.getElementById("sname").value,
+	              doc_lname: document.getElementById("lname").value,
+	              doc_nick: document.getElementById("nickname").value,
+	              doc_pw: document.getElementById("pw").value,
+	              doc_pw_confirm: document.getElementById("pw_confirm").value,
+	              gender: gender,
+	              degree: document.getElementById("degree").value,
+	              doc_phone: document.getElementById("phone").value,
+	              birth_date: document.getElementById('datepicker').value,
+	              doc_address: document.getElementById("address").value,
+	              bio: document.getElementById("bio").value,
+	              side_spec: document.getElementById("side_spec").value,
+	              specialty :document.getElementById("spec").value
+	              },
+	        success: function(data){
+	                  if(data!="1")
+	                    alert(data);
+	                  else { alert("You registered successfully. Now login please!"); window.open("http://localhost/ekshefle/","_self");}
+	                }
+	        });
   }
 }

@@ -1,8 +1,14 @@
 <?php
+//--------prevent direct access---------------
+if( empty( $_SERVER['HTTP_X_REQUESTED_WITH'] ) &&
+    strtolower( $_SERVER['HTTP_X_REQUESTED_WITH'] ) != "xmlhttprequest")
+        header("location: /ekshefle/");
+//--------/prevent direct access---------------
+
 require_once('db/config.php');
-require_once('validation.php');
-require_once('test_input.php');
-require_once('send_email.php');
+require_once('private/validation.php');
+require_once('private/test_input.php');
+require_once('private/send_email.php');
     //checking that key is set
     if(isset($_POST['doc_email']) && isset($_POST['doc_pw']) && isset($_POST['doc_pw_confirm']) &&  
         isset($_POST['doc_fname']) && isset($_POST['doc_sname']) && isset($_POST['doc_lname']) && 
@@ -37,7 +43,7 @@ require_once('send_email.php');
                 $doc_email = test_input($doc_email);
                 $doc_pw = test_input($doc_pw);
                 $doc_pw_confirm = test_input($doc_pw_confirm);
-                $doc_fname = test_input($doc_fname); 
+                $doc_fname = test_input($doc_fname);
                 $doc_sname = test_input($doc_sname);
                 $doc_lname = test_input($doc_lname);
                 $birth_date = test_input($birth_date);
