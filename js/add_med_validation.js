@@ -1,104 +1,13 @@
-function on_gov_select()
-{
-    var gov=document.getElementById("gov").value;
-    if(gov!=""){
-        document.getElementById("city").disabled=false;
-        document.getElementById("other_city_check").disabled=false;
-
-        $.ajax({
-            type: "POST",
-            url:"http://localhost/ekshefle/profile/operations/get_cities.php",
-            data:{gov_name:gov},
-            success: function(data){
-                document.getElementById("city").innerHTML="<option></option>";
-                document.getElementById("city").innerHTML+=data;
-            },
-            error: function(error){
-                alert(error);
-            }
-        });
-    }
-    else
-    {
-        document.getElementById("city").disabled=true;
-        document.getElementById("other_city_check").disabled=true;
-    }
-}
-function on_city_select()
-{
-    var gov=document.getElementById("gov").value;
-    var city=document.getElementById("city").value;
-    if(gov!=""){
-        document.getElementById("area").disabled=false;
-        document.getElementById("other_area_check").disabled=false;
-
-        $.ajax({
-            type: "POST",
-            url:"http://localhost/ekshefle/profile/operations/get_areas.php",
-            data:{gov_name:gov, city_name:city},
-            success: function(data){
-                document.getElementById("area").innerHTML="<option></option>";
-                document.getElementById("area").innerHTML+=data;
-            },
-            error: function(error){
-                alert(error);
-            }
-        });
-    }
-    else
-    {
-        document.getElementById("area").disabled=true;
-        document.getElementById("other_area_check").disabled=true;
-    }
-}
-
-function other_city_check()
-{
-    if(document.getElementById("other_city_check").checked)
-    {
-        document.getElementById("city").disabled=true;
-        document.getElementById("area").disabled=true;
-
-        document.getElementById("other_area_check").checked=true;
-        document.getElementById("other_area_check").disabled=true;
-        document.getElementById("other_area").disabled=false;
-        document.getElementById("other_city").disabled=false;
-
-    }
-    else 
-    {
-        on_gov_select();
-        document.getElementById("other_city").disabled=true;
-        document.getElementById("area").disabled=true;
-        document.getElementById("other_area_check").checked=false;
-        document.getElementById("other_area_check").disabled=true;
-        document.getElementById("other_area").disabled=true; 
-    }
-}
-
-function other_area_check()
-{
-    if(document.getElementById("other_area_check").checked)
-    {
-        document.getElementById("area").value="";
-        document.getElementById("area").disabled=true;
-        document.getElementById("other_area").disabled=false; 
-    }
-    else
-    {
-        document.getElementById("area").disabled=false;
-        document.getElementById("other_area").disabled=true;   
-    }
-}
-
 function clinic_submit()
 {
+    var error = document.getElementById("error");
+
     var clinic_name = document.getElementById("clinic_name").value;
     var specialty = document.getElementById("specialty").value;
     var phones = document.getElementById("phones").value;
     var address = document.getElementById("address").value;
-    var error = document.getElementById("error");
-    var gov_name= document.getElementById("gov");
+    var gov_name= document.getElementById("gov").value;
+    var price = document.getElementById("price").value;
     var city_name="";
     var area_name="";
     var days={};
@@ -117,16 +26,21 @@ function clinic_submit()
         error.innerHTML="Add at least one phone for the clinic";
 
     else if(!/^[0-9٠-٩, ]+$/.test(phones))
-        error.innerHTML="Please! check you phones again.";
+        error.innerHTML="Invalid Phone! check your phones again.";
 
     else if(address==="" || address==null)
         error.innerHTML="Clinic's address is required, please fill it!";
 
     else if(!/^[ء-ي0-9٠-٩-, ]+$/.test(address))
         error.innerHTML="Address must be in Arabic.";
+    
+    else if(price==="" || price==null)
+        error.innerHTML="Price is required, please fill it!";
 
+    else if(!/^[0-9٠-٩.]+$/.test(price))
+        error.innerHTML="Price is only numbers.";
     //location check
-    else if(gov_name==="" || gov_name==null)
+    else if(gov_name=="" || gov_name==null)
         error.innerHTML="Please choose governorate!";
     else{
             //get city
@@ -166,8 +80,9 @@ function clinic_submit()
     if(days!==false)
     {
         days= JSON.stringify(days);
+        total_spec = [{specialty:specialty , price:price , days:days ,side_spec:side_spec}]
         side_spec=document.getElementById("side_spec").value;
-        //send_clinic_data(clinic_name,specialty,phones,address,gov_name,city_name,area_name,days,side_spec);
+        send_clinic_data(clinic_name,phones,address,gov_name,city_name,area_name,total_spec);
     }
 }
 
@@ -263,30 +178,32 @@ function get_days()
     else return days;
 
 }
-/*
-function send_clinic_data(clinic_name,specialty,phones,address,gov_name,city_name,area_name,days,side_spec)
+
+function send_clinic_data(clinic_name,phones,address,gov_name,city_name,area_name,total_spec)
 {
     $.ajax({
         type: "POST",
         url:"http://localhost/ekshefle/profile/operations/add_medical.php",
         data:{
-            med_type:'Clinic'
+            med_type:'Clinic',
             med_name:clinic_name,
-            specialty:specialty,
             med_phones:phones,
             detailed_add:address,
             gov_name:gov_name,
             city_name:city_name,
             area_name:area_name,
-            avail_days:days,
-            side_spec:side_spec
+            total_spec:total_spec
         },
         success: function(data){
-
+            if(data=="SUCCESS")
+                {
+                    alert("Clinic is added successfully!");
+                    get_clinics();
+                }
+            else alert(data);
         },
         error: function(error){
             alert(error);
         }
     });
 }
-*/

@@ -11,15 +11,38 @@ require_once("/private/check_verified.php");
 ?>
 
 <div class="box">
-
 <?php
 if($verified){
     require_once("/private/default.php");
     require_once("/private/sidebar.php");
 }
 ?>
-
 </div>
+
+<div id="del_med_div" class="modal fade" style="display: none; background:#fff; width:50%;"> 
+  <div class="modal-dialog">
+    <div class="modal-content"> 
+      
+      <div class="modal-header">  
+          <a class="close" data-dismiss="modal">×</a>  
+          <h3>Are you sure you want to delete this Medical Institution?</h3>  
+      </div>  
+
+      <div class="modal-body"> 
+        ID:
+        <input type="text" id="del_med_id" disabled>
+        Name:
+        <input type="text" id="del_med_name" disabled>
+      </div> 
+
+      <div class="modal-footer"> 
+        <input type="submit"  class="btn btn-danger" value="Delete" onclick="confirm_del_med();"/>  
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+      </div>
+    </div>          
+  </div>                          
+</div>
+
 <script src="/ekshefle/js/vendor/jquery-1.9.1.min.js"></script>
 <script src="/ekshefle/js/vendor/bootstrap.min.js"></script>
 

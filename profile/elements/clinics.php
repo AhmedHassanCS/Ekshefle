@@ -15,10 +15,9 @@ else{
 
     //draw square with number of clinics and if they are published
     require_once("../squares/clinics_square.php");
-    echo '<div class="box">';
+    echo '<div class="box" id="clinics_container">';
     echo get_doc_medicals_tbl($doc_email,'Clinic');
 }
 ?>
 <input class="btn btn-success btn-large" type="button" value="Add Clinic" onclick="new_clinic();"/>
 </div>
-

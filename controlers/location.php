@@ -116,26 +116,26 @@ function area_exist_else_add($gov_name,$city_name,$area_name)
 {
     global $db;
 
-    $city_id=get_city_id($gov_name,$city_name);
-    $select= $db->query("SELECT area_name from area where city_id='$city_id'");
-    if(mysqli_num_rows($select)>0)
-    {
-        return true;
-    }
-    else {add_area($gov_name,$city_name, $area_name); return false;}
+    $area_id=get_area_id($gov_name,$city_name,$area_name);
+    if($area_id)
+        return $area_id;
+    else 
+        {
+            add_area($gov_name,$city_name, $area_name); 
+            return $db->insert_id;
+        }
 }
 
-function city_exist_else_add($gov_id,$city_name)
+function city_exist_else_add($gov_name,$city_name)
 {
     global $db;
 
-    $gov_id=get_city_id($gov_name);
-    $select= $db->query("SELECT city_name from city where gov_id='$gov_id'");
-    if(mysqli_num_rows($select)>0)
+    $city_id=get_city_id($gov_name,$city_name);
+    if($city_id)
     {
-        return true;
+        return $city_id;
     }
-    else {add_city($gov_name,$city_name); return false;}
+    else {add_city($gov_name,$city_name); return $db->insert_id;}
 }
 
 function area_exist($gov_name,$city_name,$area_name)

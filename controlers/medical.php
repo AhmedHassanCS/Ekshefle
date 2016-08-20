@@ -46,6 +46,21 @@ function is_expired($doc_email,$med_type)
     }
     else return false;
 }
+function is_requested($doc_email,$med_type)
+{
+    global $db;
+    $conts= $db->query("SELECT * from request as r, doctor as d 
+                where d.doc_email='$doc_email'
+                and d.doc_id=r.doc_id
+                and r.med_type='$med_type'
+                ");
+
+    if(mysqli_num_rows($conts)==1)
+    {
+        return true;
+    }
+    else return false;
+}
 function get_doc_medicals_tbl($doc_email,$med_type)
 {
     global $db;
@@ -60,7 +75,7 @@ function get_doc_medicals_tbl($doc_email,$med_type)
     elseif(mysqli_num_rows($meds_result)==0)
         return "<h3>Empty: 0 medical elements in this type<h3>";
     else{
-        
+        $med_type=strtolower($med_type);
         $tbl='<table class="table table-bordered table-hover">
                 <thead><td>Id</td><td>Name</td><td>Address</td><td>Phones</td><td>Operations</td></thead>';
         while($row = $meds_result->fetch_assoc()){
@@ -70,8 +85,10 @@ function get_doc_medicals_tbl($doc_email,$med_type)
                     <td>'.$row['detailed_add'].'</td>
                     <td>'.$row['phones'].'</td>
                     <td>
-                    <input class="btn btn-warning btn-xs" type="button" value="Edit"/>
-                    <input class="btn btn-danger btn-xs" type="button" value="Delete"/>
+                    <input class="btn btn-warning btn-xs" type="button" 
+                    value="View & Edit" onclick="edit_'.$med_type.'('.$row['med_id'].');"/>
+                    <input class="btn btn-danger btn-xs" type="button" 
+                    value="Delete" onclick="delete_medical('.$row['med_id'].',\''.$row['med_name'].'\');"/>
                     </td>
                     </tr>';
         }
@@ -79,8 +96,12 @@ function get_doc_medicals_tbl($doc_email,$med_type)
         return $tbl;
     }
 }
-function add_medical($doc_email,$med_type,$med_name,$phones,$detailed_add,$area_id,$specialty)
+function add_medical($doc_email,$med_type,$med_name,$phones,$detailed_add,$area_id,$total_spec)
 {
+    //insert into medical
+    //get medical id
+    //with for loop through total_spec add sepcialities
+    global $db;
     $doc_id= get_doc_id($doc_email);
     $insert_med_result = $db->query("INSERT into medical (doc_id,med_name,med_type,phones) 
                                     values($doc_id,'$med_name','$med_type','$phones')");
@@ -89,13 +110,76 @@ function add_medical($doc_email,$med_type,$med_name,$phones,$detailed_add,$area_
         $insert_address = $db->query("INSERT into address (area_id,detailed_add,med_id) 
                                         values($area_id,'$detailed_add',$med_id)");
         if(!$insert_address)
-            return false;
-        else return true;
+            return $db->error;
+        else return add_specialties($med_id,$total_spec);
+
     }
-    else return false;
+    else return $db->error;
 }
+
+function add_specialties($med_id,$spec)
+{
+    global $db;
+    foreach($spec as $s)
+    {
+        $spec_name=$s["specialty"];
+        $spec_id = get_spec_id($spec_name);
+        $price= $s["price"];
+        $days= $s["days"];
+        $side_spec= $s["side_spec"];
+        $insert_result= $db->query("INSERT into med_spec(med_id,spec_id,price,aval_days,side_spec)
+                                    values($med_id,$spec_id,$price,'$days','$side_spec')");
+        if(!$insert_result)
+            return $db->error;
+    }
+    return "SUCCESS";
+
+}
+
+function get_spec_id($spec_name)
+{
+    global $db;
+    $query_result = $db->query("SELECT spec_id from specialty where spec_name= '$spec_name'");
+    $spec_row = $query_result->fetch_assoc();
+    if(!$spec_row)
+        return $db->error;
+    else return $spec_row["spec_id"];
+}
+
 function delete_medical($med_id)
 {
+    global $db;
     return $db->query("DELETE from medical where med_id=$med_id");
+}
+function get_medical($med_id)
+{
+    global $db;
+    $med_result =$db->query("SELECT med_name,phones from medical where med_id=$med_id");
+    $med_info = $med_result->fetch_assoc();
+    
+    $spec_result =$db->query("SELECT spec_id, aval_days,price,side_spec from med_spec where med_id=$med_id");
+    $spec_info = $spec_result->fetch_assoc();
+    
+    $address_result= $db->query("SELECT area_id,detailed_add from address where med_id=$med_id");
+    $add_info = $address_result->fetch_assoc();
+
+    $area_id=$add_info["area_id"];
+
+    $location_result= $db->query("SELECT a.area_name, a.area_id,c.city_name, c.city_id,g.gov_name,g.gov_id
+                                from area as a, city as c, governorate as g
+                                where a.area_id=$area_id
+                                and a.city_id=c.city_id
+                                and c.gov_id=g.gov_id");
+    $location_info=$location_result->fetch_assoc();
+
+    $total_info=array_merge($med_info,$spec_info,$add_info,$location_info);
+    //med_name , phones , spec_id , aval_days , price , side_spec , area_name , city_name , gov_name
+    //, area_id , city_id , gov_id
+    return $total_info;
+}
+function update_attrib($med_id,$table,$attrib_name,$new_value)
+{
+    global $db;
+    return $db->query("UPDATE $table set $attrib_name='$new_value' where med_id='$med_id'");
 }
 ?>

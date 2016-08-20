@@ -5,18 +5,18 @@ if( empty( $_SERVER['HTTP_X_REQUESTED_WITH'] ) &&
         header("location: /ekshefle/");
 //--------/prevent direct access---------------
 
-require_once("../../private/session.php");
+require_once("../../db/config.php");
 require_once("../../controlers/location.php");
 require_once("../../private/test_input.php");
 
-if(!$loggedin)
-  header("location: /ekshefle/");
 
-elseif(!isset($_POST['gov_name']))
+if(!isset($_POST['gov_name']))
   header("location: /ekshefle/");
 else
 {
-    $gov_name = test_input($_POST['gov_name']);
+
+    $gov_name = mysqli_real_escape_string($db,$_POST['gov_name']);
+    $gov_name = test_input($gov_name);
     $cities_html= get_gov_cities($gov_name);
     echo $cities_html;
 }

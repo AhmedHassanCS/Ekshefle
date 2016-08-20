@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once("../../private/session.php");
 
 if( empty( $_SERVER['HTTP_X_REQUESTED_WITH'] ) &&
@@ -12,53 +12,29 @@ require_once("../../controlers/location.php");
 
 <div class="box box-success">
       <div class="box-header with-border">
-        <h3>Enter Clinic's Information<br></h3>
+        <h3>Enter Hospital's Information<br></h3>
       </div>
 
       <div class="box-body">
 
-        <!--Clinic Name-->
+        <!--Hospital Name-->
         <div class="form-group">
-          <h4>Clinic Name</h4>
+          <h4>Hospital Name</h4>
           اسم العيادة يجب أن يكون اسم توضيحي لك بحيث تستطيع التمييز بين عياداتك<br>
-            <input type="text" id="clinic_name" class="form-control" pattern="[ء-ي1-9٠-٩_ ]+" required="required" placeholder="إسم العيادة">
-        </div>
-        <br>
-
-        <!--Specialty-->
-        <div class="form-group" >
-          <h4>Specialty</h4>
-            <select class="select2" id="specialty">
-            <?php
-              $spec_sql="SELECT spec_name, spec_id from specialty";
-              $spec_result=$db->query($spec_sql);
-
-              $doc_email=$_SESSION['loggedin_user'];
-              $get_doc_spec=$db->query("SELECT spec_id from doctor where doc_email='$doc_email'");
-              $doc=$get_doc_spec->fetch_assoc();
-              $doc_spec=$doc['spec_id'];
-              while($spec = $spec_result->fetch_assoc())
-              {
-                if($spec["spec_id"]!=$doc_spec)
-                echo "<option>".$spec["spec_name"]."</option>";
-                else echo "<option selected>".$spec["spec_name"]."</option>";
-              }
-            ?>
-          </select>
-          <br><br>
+            <input type="text" id="Hospital_name" class="form-control" pattern="[ء-ي1-9٠-٩_ ]+" required="required" placeholder="إسم العيادة">
         </div>
         <br>
 
         <!--Phones-->
         <div class="form-group" id="ph_cont">
-          <h4>Clinic Phones (Separated With Commas)</h4>
+          <h4>Hospital Phones (Separated With Commas)</h4>
           <input type="text" id="phones" class="form-control" placeholder="01.........., 01..........">
         </div>
         <br>
 
         <!--Address-->
         <div class="form-group" id="address_cont">
-          <h4>Clinic Detailed Address</h4>
+          <h4>Hospital Detailed Address</h4>
           <input type="text" id="address" class="form-control" placeholder="المحافظة - المركز أو القرية - المنطقة - الشارع - رقم العمارة" style="width:37%;">
         </div>
         <br>
@@ -110,9 +86,36 @@ require_once("../../controlers/location.php");
         </div>
         <br>
 
+        <!--from here mutiple specialties with mutiple days, price and side specialities -->
+        <!--Specialty-->
+        <div class="form-group" >
+          <h4>Specialty</h4>
+            <select class="select2" id="specialty">
+            <?php
+              $spec_sql="SELECT spec_name, spec_id from specialty";
+              $spec_result=$db->query($spec_sql);
+
+              $doc_email=$_SESSION['loggedin_user'];
+              $get_doc_spec=$db->query("SELECT spec_id from doctor where doc_email='$doc_email'");
+              $doc=$get_doc_spec->fetch_assoc();
+              $doc_spec=$doc['spec_id'];
+              while($spec = $spec_result->fetch_assoc())
+              {
+                if($spec["spec_id"]!=$doc_spec)
+                echo "<option>".$spec["spec_name"]."</option>";
+                else echo "<option selected>".$spec["spec_name"]."</option>";
+              }
+            ?>
+          </select>
+          <br><br>
+        </div>
+        <br>
+
+
+
         <!--Days-->
         <div class="form-group" style="width:25%;">
-          <h4>Days you available in this clinic</h4>
+          <h4>Days available for this Specialty</h4>
           
           <table class="table" >
             <!---sat-->
@@ -177,7 +180,7 @@ require_once("../../controlers/location.php");
       <!-- Button -->
       <div class="box-footer">
         <span id="error" style="color:red;"></span><br>
-        <button class="btn btn-success btn-large" onclick="clinic_submit();">Submit</button>
+        <button class="btn btn-success btn-large" onclick="Hospital_submit();">Submit</button>
       </div>
 
     </div>

@@ -5,14 +5,12 @@ if( empty( $_SERVER['HTTP_X_REQUESTED_WITH'] ) &&
         header("location: /ekshefle/");
 //--------/prevent direct access---------------
 
-require_once("../../private/session.php");
+require_once("../../db/config.php");
 require_once("../../controlers/location.php");
 require_once("../../private/test_input.php");
 
-if(!$loggedin)
-  header("location: /ekshefle/");
 
-elseif(!isset($_POST['gov_name']) || !isset($_POST['city_name']))
+if(!isset($_POST['gov_name']) || !isset($_POST['city_name']))
   header("location: /ekshefle/");
 else
 {

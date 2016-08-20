@@ -2,6 +2,7 @@
 
 function get_doc_id($doc_email)
 {
+    global $db;
     $result=$db->query("SELECT doc_id from doctor where doc_email='$doc_email'");
 
     if(mysqli_num_rows($result)==1)
