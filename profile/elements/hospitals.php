@@ -17,6 +17,10 @@ else{
     require_once("../squares/hospitals_square.php");
 
     echo '<div class="box" id="hospitals_container">';
+    if($num_of_hospitals==0)
+    echo "<h5 style='color:red;'>This section is for hospital owners,<br>
+        If you work in a clinic in some hospital,<br>
+        add it as a clinic and set the address as the hospital's address including hospital's name<br><br></h5>";
     echo get_doc_medicals_tbl($doc_email,'Hospital');
 }
 ?>

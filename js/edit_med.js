@@ -4,6 +4,7 @@ var org_phones="";
 var org_address="";
 var org_price="";
 var org_side="";
+
 function edit_name()
 {
     org_name = document.getElementById('clinic_name').value;
@@ -368,8 +369,12 @@ function send_location(gov_name,city_name,area_name)
             else
             {
                 alert("Location Changed Successfully.");
-                $("#edit_loc_div").modal('toggle');
-                edit_clinic(med_id);
+                if($("#edit_clinic_div").length!=0)
+                    edit_clinic(med_id);
+                else if($("#edit_hospital_div").length!=0)
+                    edit_hospital(med_id);
+                else if($("#edit_lab_div").length!=0)
+                    edit_lab(med_id);
             }
         },
         error: function(error){

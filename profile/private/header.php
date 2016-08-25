@@ -24,10 +24,9 @@ if(!$loggedin)
     <link rel="stylesheet" href="/ekshefle/admin/bootstrap/fonts/font-awesome-4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="/ekshefle/admin/plugins/datepicker/datepicker3.css">
     <link rel="stylesheet" href="/ekshefle/admin/plugins/iCheck/all.css">
-    <link rel="stylesheet" href="/ekshefle/admin/plugins/timepicker/bootstrap-timepicker.min.css">
     <link rel="stylesheet" href="/ekshefle/admin/plugins/select2/select2.min.css">
-
-
+    
+    <link rel="stylesheet" href="/ekshefle/admin/plugins/pace/pace.min.css">    
 
 
     <script src="/ekshefle/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>

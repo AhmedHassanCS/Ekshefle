@@ -164,13 +164,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
-                    <a href="#tab_patients" data-toggle="tab">Patients</a>
+                    <a href="#" onclick="load_patients();" data-toggle="tab">Patients</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="admins.php">Admins</a>
+                    <a href="#">Admins</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#tab_doctors" data-toggle="tab">Doctors</a>
+                    <a href="#" onclick="load_doctors();" data-toggle="tab">Doctors</a>
                   </div>
                 </div>
                 <!-- /.row -->

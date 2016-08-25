@@ -52,10 +52,21 @@ if($verified){
 <script src="/ekshefle/admin/plugins/select2/select2.full.min.js"></script>
 <script src="/ekshefle/admin/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script src="/ekshefle/admin/plugins/iCheck/icheck.min.js"></script>
+<script src="/ekshefle/admin/plugins/pace/pace.min.js"></script>
 
 <script src="/ekshefle/js/main.js"></script>
 <!-- Required javascript files for Slider -->
 
+<script type="text/javascript">
+  // To make Pace works on Ajax calls
+  $(document).ajaxStart(function() { Pace.restart(); });
+  $(document).ajaxError(function(event, request, settings) {alert("Can't reach server! check your connection!\n"); });
 
+    $('.ajax').click(function(){
+        $.ajax({url: '#', success: function(result){
+            $('.ajax-content').html('<hr>Ajax Request Completed !');
+        }});
+    });
+</script>
 </body>
 </html>

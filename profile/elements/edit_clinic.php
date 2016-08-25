@@ -12,16 +12,94 @@ require_once("../../controlers/medical.php");
 require_once("../../controlers/location.php");
 
 $med_id=mysqli_real_escape_string($db,$_POST["med_id"]);
-$med_info= get_medical($med_id);
+$med_info= get_clinic($med_id);
 ?>
-<!--edit gov-->
+<!--edit loc-->
+<div id="edit_loc_div" class="modal fade" style="display: none; background:#fff; width:50%;"> 
+  <div class="modal-dialog">
+    <div class="modal-content"> 
+      
+      <div class="modal-header">  
+          <a class="close" data-dismiss="modal">×</a>  
+          <h3>Edit Location</h3>  
+      </div>  
 
-<!--/edit gov-->
+      <div class="modal-body"> 
+        <table class="table">
+            <!--governorate-->
+            <tr>
+              <td>المحافظة</td>
+              <td>
+                <select list="browsers" class="select2" id="gov" onchange="on_gov_select();">
+                  <option value=""></option>
+                  <?php
+                    $result= $db->query("SELECT gov_name, gov_id from governorate");
+                    
+                    while($row=$result->fetch_assoc())
+                      if($row['gov_id']!=$med_info['gov_id'])
+                        echo "<option>".$row['gov_name']."</option>";
+                      else echo "<option selected>".$row['gov_name']."</option>";
+                  ?>
+                </select>
+              </td>
+            </tr>
+            <!--city-->
+            <tr>
+              <td>المركز أو القرية</td>  
+              <td>
+                <select list="browsers" class="select2" id="city" onchange="on_city_select();">
+                  <?php
+                    $result= $db->query("SELECT city_name, city_id from city where gov_id=".$med_info['gov_id']);
+                    
+                    while($row=$result->fetch_assoc())
+                      if($row['city_id']!=$med_info['city_id'])
+                        echo "<option>".$row['city_name']."</option>";
+                      else echo "<option selected>".$row['city_name']."</option>";
+                  ?>
+                </select>
+              </td> 
+              <td>
+                <input type="checkbox" for="city" id="other_city_check" onchange="other_city_checked();"> Other  
+                <input   placeholder="مركز أو قرية أخري" id="other_city" disabled>
+              </td>
+            </tr>
+            <!--area-->
+            <tr>
+              <td>المنطقة أو المدينة</td>
+              <td>
+                <select list="browsers" class="select2" id="area">
+                  <?php
+                    $result= $db->query("SELECT area_name, area_id from area where city_id=".$med_info['city_id']);
+                    
+                    while($row=$result->fetch_assoc())
+                      if($row['area_id']!=$med_info['area_id'])
+                        echo "<option>".$row['area_name']."</option>";
+                      else echo "<option selected>".$row['area_name']."</option>";
+                  ?>
+                </select>
+              </td>
+              <td>
+                <input type="checkbox" for="city" id="other_area_check" onchange="other_area_checked();"> Other 
+                <input   placeholder="منطقة أخري" id="other_area" disabled>
+              </td>
+            </tr>
+          </table>
+          <span id="loc_error" style="color:red;"></span>
+      </div> 
+
+      <div class="modal-footer"> 
+        <input type="submit"  class="btn btn-danger" value="Save" onclick="save_location();"/>  
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+      </div>
+    </div>          
+  </div>                          
+</div>
+<!--/edit loc-->
 
 <!--edit form-->
-<div class="box box-success">
+<div class="box box-success" id="edit_clinic_div">
       <div class="box-header with-border">
-        <h3>Enter Clinic's Information<br></h3>
+        <h3>Clinic's Information<br></h3>
       </div>
 
       <div class="box-body">
@@ -266,8 +344,6 @@ $med_info= get_medical($med_id);
       </div>
 
     </div>
-
-<script src="/ekshefle/admin/plugins/timepicker/bootstrap-timepicker.min.js"></script>
 
 <script src="/ekshefle/js/init.js"></script>
 <script src="/ekshefle/js/edit_med.js"></script>

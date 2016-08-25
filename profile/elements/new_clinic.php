@@ -10,7 +10,7 @@ elseif(!$loggedin)
 require_once("../../controlers/location.php");
 ?>
 
-<div class="box box-success">
+<div class="box box-success" id="new_clinic_div">
       <div class="box-header with-border">
         <h3>Enter Clinic's Information<br></h3>
       </div>
@@ -40,8 +40,8 @@ require_once("../../controlers/location.php");
               while($spec = $spec_result->fetch_assoc())
               {
                 if($spec["spec_id"]!=$doc_spec)
-                echo "<option>".$spec["spec_name"]."</option>";
-                else echo "<option selected>".$spec["spec_name"]."</option>";
+                echo "<option value='".$spec["spec_name"]."'>".$spec["spec_name"]."</option>";
+                else echo "<option value='".$spec["spec_name"]."' selected>".$spec["spec_name"]."</option>";
               }
             ?>
           </select>

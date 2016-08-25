@@ -34,7 +34,10 @@ function edit_clinic(clinic_id)
 {
     $("#main_container").load("elements/edit_clinic.php" ,{med_id:clinic_id});
 }
-
+function edit_hospital(hos_id)
+{
+    $("#main_container").load("elements/edit_hospital.php" ,{med_id:hos_id});
+}
 function delete_medical(med_id,med_name)
 {
     document.getElementById("del_med_id").value=med_id;

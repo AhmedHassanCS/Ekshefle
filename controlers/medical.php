@@ -151,7 +151,7 @@ function delete_medical($med_id)
     global $db;
     return $db->query("DELETE from medical where med_id=$med_id");
 }
-function get_medical($med_id)
+function get_clinic($med_id)
 {
     global $db;
     $med_result =$db->query("SELECT med_name,phones from medical where med_id=$med_id");
@@ -177,9 +177,135 @@ function get_medical($med_id)
     //, area_id , city_id , gov_id
     return $total_info;
 }
+
+function get_hospital($med_id)
+{
+    global $db;
+    $med_result =$db->query("SELECT med_name,phones from medical where med_id=$med_id");
+    $med_info = $med_result->fetch_assoc();
+    
+    $spec_result =$db->query("SELECT m.spec_id,s.spec_name ,m.aval_days,m.price,m.side_spec 
+                            from med_spec as m, specialty as s
+                            where m.med_id=$med_id
+                            and m.spec_id=s.spec_id");
+    $total_spec=array();
+    while($spec_info = $spec_result->fetch_assoc())
+        array_push($total_spec , $spec_info);
+    
+    $address_result= $db->query("SELECT area_id,detailed_add from address where med_id=$med_id");
+    $add_info = $address_result->fetch_assoc();
+
+    $area_id=$add_info["area_id"];
+
+    $location_result= $db->query("SELECT a.area_name, a.area_id,c.city_name, c.city_id,g.gov_name,g.gov_id
+                                from area as a, city as c, governorate as g
+                                where a.area_id=$area_id
+                                and a.city_id=c.city_id
+                                and c.gov_id=g.gov_id");
+    $location_info=$location_result->fetch_assoc();
+
+    $total_info=array_merge($med_info,$add_info,$location_info);
+    $total_info["total_spec"]=$total_spec;
+    //med_name , phones , spec_id , aval_days , price , side_spec , area_name , city_name , gov_name
+    //, area_id , city_id , gov_id
+    return $total_info;
+}
+
 function update_attrib($med_id,$table,$attrib_name,$new_value)
 {
     global $db;
     return $db->query("UPDATE $table set $attrib_name='$new_value' where med_id='$med_id'");
+}
+function update_spec_attrib($med_id,$spec_id,$attrib_name,$new_value)
+{
+    global $db;
+    return $db->query("UPDATE med_spec set $attrib_name='$new_value' 
+                        where med_id=$med_id
+                        and spec_id=$spec_id");
+}
+//simone profile functions 
+
+function get_med_name($med_id)
+{
+    global $db;
+    $result=$db->query("SELECT med_name from medical where med_id='$med_id'");
+
+    if(mysqli_num_rows($result)==1)
+    {
+        $row=$result->fetch_assoc();
+        return $row['med_name'];
+    }
+    else return false;
+}
+
+
+function get_med_phones($med_id)
+{
+    global $db;
+    $result=$db->query("SELECT phones from medical where med_id='$med_id'");
+
+    if(mysqli_num_rows($result)==1)
+    {
+        $row=$result->fetch_assoc();
+        return $row['phones'];
+    }
+    else return false;
+}
+//array_push($arr,$row["med_id"]);
+function get_med_location($med_id)
+{ $area_id; $city_id; $gov_id; $arr=array();
+    global $db;
+    $result=$db->query("SELECT area_id from address where med_id='$med_id'");
+
+    if(mysqli_num_rows($result)>0)
+    {
+        $row=$result->fetch_assoc();
+       $area_id=$row['area_id'];
+    }
+    else return false;
+     $result=$db->query("SELECT area_name ,city_id from area where area_id='$area_id'");
+    
+    if(mysqli_num_rows($result)>0)
+    {
+        $row=$result->fetch_assoc();
+       array_push($arr,$row['area_name']);
+       $city_id=$row['city_id'];
+    }
+    else return false;
+
+     $result=$db->query("SELECT city_name,gov_id from city where city_id='$city_id'");
+            if(mysqli_num_rows($result)>0)
+    {
+        $row=$result->fetch_assoc();
+        array_push($arr,$row['city_name']);
+        $gov_id=$row['gov_id'];
+    }
+    else return false;
+        
+     $result=$db->query("SELECT gov_name from governorate where gov_id='$gov_id'");
+            if(mysqli_num_rows($result)>0)
+    {
+        $row=$result->fetch_assoc();
+        array_push($arr,$row['gov_name']);
+    }
+    else return false;
+    
+    return $arr;
+    
+}
+
+function get_med_side_spec_price($med_id){
+        global $db; $arr=array();
+    $result=$db->query("SELECT side_spec,price from med_spec where med_id='$med_id'");
+
+    if(mysqli_num_rows($result)==1)
+    {
+        $row=$result->fetch_assoc();
+       $arr["side_spec"]=$row['side_spec'];
+       $arr["price"]=$row['price'];
+    }
+    else return false;
+    return $arr;
+    
 }
 ?>
