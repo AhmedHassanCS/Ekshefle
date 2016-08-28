@@ -398,7 +398,7 @@ function submit()
 	        success: function(data){
 	                  if(data!="1")
 	                    alert(data);
-	                  else { alert("You registered successfully. Now login please!"); window.open("http://25.79.63.172/ekshefle/","_self");}
+	                  else { alert("You registered successfully. Now login please!"); window.open("http://localhost/ekshefle/","_self");}
 	                }
 	        });
   }

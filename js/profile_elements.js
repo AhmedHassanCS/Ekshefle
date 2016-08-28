@@ -38,6 +38,10 @@ function edit_hospital(hos_id)
 {
     $("#main_container").load("elements/edit_hospital.php" ,{med_id:hos_id});
 }
+function edit_lab(lab_id)
+{
+    $("#main_container").load("elements/edit_lab.php" ,{med_id:lab_id});
+}
 function delete_medical(med_id,med_name)
 {
     document.getElementById("del_med_id").value=med_id;

@@ -5,6 +5,7 @@ if(!$loggedin)
 $doc_email=$_SESSION['loggedin_user'];
 $sql_get_user="SELECT is_verified from doctor where doc_email='$doc_email'";
 $get_user=$db->query($sql_get_user);
+$verified=false;
 if(mysqli_num_rows($get_user)==1)
 {
     $user=$get_user->fetch_assoc();

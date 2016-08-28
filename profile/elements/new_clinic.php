@@ -182,8 +182,6 @@ require_once("../../controlers/location.php");
 
     </div>
 
-<script src="/ekshefle/admin/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-
 <script src="/ekshefle/js/init.js"></script>
 <script src="/ekshefle/js/add_med_validation.js"></script>
 <script src="/ekshefle/js/manage_location.js"></script>

@@ -14,7 +14,7 @@ require_once("private/header.php");
 
 <div class="containerall">
 <div class="profileimg" ><label>
-  <?php print "<img src='/ekshefle/images/profile_pics/".$doc_email.".jpg' />"; ?>
+  <?php print "<img src='/ekshefle/images/profile_pics/".$doc_email.".jpg' width='100%' height='100%'/>"; ?>
 </label></div>
 <label>
 <div class="fullname" >
@@ -30,35 +30,148 @@ require_once("private/header.php");
 <li> <?php echo $doc_email;?> <i class="fa fa-envelope" aria-hidden="true"></i></li>
 </ul>
 </div>
-<div id="meds" class="box box-primary meds">
+<div id="meds" class="box box-solid box-success meds">
 <div class="col-md-6">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs pull-right">
-              <li class=""><a href="#tab_1-1" data-toggle="tab" aria-expanded="false">عيادات</a></li>
-              <li class=""><a href="#tab_2-2" data-toggle="tab" aria-expanded="false">مستشفيات</a></li>
-              <li class="active"><a href="#tab_3-2" data-toggle="tab" aria-expanded="true">معامل</a></li>
-        
+              <li class="active"><a href="#tab_1-1" data-toggle="tab" aria-expanded="false">عيادات</a></li>
+              <li class=""><a href="#tab_2-2" data-toggle="tab" aria-expanded="false">مستشفيات</a></li>        
             </ul>
+
             <div class="tab-content">
-              <div class="tab-pane" id="tab_1-1">
-      			   <?php
-                if(is_active($doc_email,'Clinic')){
-                  $arrr=get_clinics($doc_email);
-                  for($i=0;$i<count($arrr);$i++) 
-                  {
-                      echo "<b>".get_med_name($arrr[$i])."</b><br>";
-                      echo"<p> "; print_r (get_med_location($arrr[$i])); echo "<br></p>";
-                      $sp=get_med_side_spec_price($arrr[$i]);
-                      echo"<p> ".$sp["side_spec"]. "<br></p>";
-                      echo"<p> ".$sp["price"]. "<br></p><hr>";
-                    
-                  }
-                }
-               ?>
-              </div>
+              <div class="tab-pane active" id="tab_1-1">
+
+                  <?php
+                  $clinic_query= $db->query("SELECT med_id from medical 
+                              where doc_id=$doc_id
+                              and med_type='Clinic'
+                              and is_active=1");
+                    while($clinic_db=$clinic_query->fetch_assoc()){
+                      echo '<table class="table box box-solid box-primary"><tbody><tr><td style="float:left; text-align:right;">';
+                      $clinic=get_clinic($clinic_db['med_id']);
+                      $days=json_decode($clinic["aval_days"]);
+                      echo "<table class='table bordered-table text-center'>
+                                <thead>
+                                  <th>إلي</th>
+                                  <th>من</th>
+                                  <th>اليوم</th>
+                                </thead>
+                                <tbody>";
+                      $sat=$days->{"sat"};
+                      if(isset($sat))
+                        echo "<tr><td>".$sat->{"to"}."</td>"."<td>".$sat->{"from"}."</td>"."<td>السبت</td></tr>";
+                      echo "</tbody></table>";
+                      echo "</td><td style='float:right; text-align:right;'>";
+
+                      echo "<b>".$clinic['med_name']."<br></b>";
+                      echo "<b>".$clinic['gov_name']."<br></b>";
+                      echo "<b>".$clinic['city_name']."<br></b>";
+                      echo "<b>".$clinic['area_name']."<br></b>";
+                      echo "<b>".$clinic["side_spec"]. "<br></b>";
+                      echo "<b>".$clinic["price"]. "<br></b>";
+
+                      echo "</td></tr></tbody></table>";
+                    }                  
+                  ?>
+                </div>
+
               <div class="tab-pane" id="tab_2-2">
-              </div>
-              <div class="tab-pane active" id="tab_3-2">
+                
+                  <!--hospitals as tab-->
+                    <?php
+                      $hos_query= $db->query("SELECT med_id from medical 
+                                where doc_id=$doc_id
+                                and med_type='Hospital'
+                                and is_active=1");
+                      //$li_html='<ul class="nav nav-tabs pull-right">';
+                      $content_html='<div class="box-group" id="accordion">';
+
+                      while($hos_db=$hos_query->fetch_assoc())
+                      {
+
+                        $hospital=get_hospital($hos_db['med_id']);
+                        $total_spec_arr=$hospital["total_spec"];
+                        $content_html=$content_html.
+                        '<div class="panel box box-primary">'.
+                          '<div class="box-header with-border">
+                            <h4 class="box-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#hos'.$hos_db['med_id'].'">'.
+                              $hospital['med_name'].
+                              '</a>
+                            </h4>
+                          </div>'.
+                          '<div id="#hos'.$hos_db['med_id'].'" class="panel-collapse collapse in">
+                            <div class="box-body">'.
+                              "<b>".$hospital['med_name']."<br></b>".
+                              "<b>".$hospital['gov_name']." </b>".
+                              "<b>".$hospital['city_name']." </b>".
+                              "<b>".$hospital['area_name']." </b>"; 
+                          foreach ($total_spec_arr as $spec) {
+                            $content_html=$content_html.'<table class="table box box-solid box-primary"><tbody><tr><td style="float:left; text-align:right;">';
+                            $days=json_decode($spec["aval_days"],true);
+                            $content_html=$content_html."<table class='table bordered-table text-center'>
+                                      <thead>
+                                        <th>إلي</th>
+                                        <th>من</th>
+                                        <th>اليوم</th>
+                                      </thead>
+                                      <tbody>";
+                            /*$sat=$days->{"sat"};
+                            $sun=$days->{"sun"};
+                            $mon=$days->{"mon"};
+                            $tues=$days->{"tues"};
+                            $wed=$days->{"wed"};
+                            $thurs=$days->{"thurs"};
+                            $fri=$days->{"fri"};*/
+
+                            if(isset($days['sat'])){
+                              $sat=$days['sat'];
+                              $content_html=$content_html."<tr><td>".$sat["to"]."</td>"."<td>".$sat["from"]."</td>"."<td>السبت</td></tr>";
+                            }
+                            if(isset($days['sun'])){
+                              $sun=$days['sun'];
+                              $content_html=$content_html."<tr><td>".$sun["to"]."</td>"."<td>".$sun["from"]."</td>"."<td>السبت</td></tr>";
+                            }
+                            if(isset($days['mon'])){
+                              $mon=$days['mon'];
+                              $content_html=$content_html."<tr><td>".$mon["to"]."</td>"."<td>".$mon["from"]."</td>"."<td>السبت</td></tr>";
+                            }
+                            if(isset($days['tues'])){
+                              $tues=$days['tues'];
+                              $content_html=$content_html."<tr><td>".$tues["to"]."</td>"."<td>".$tues["from"]."</td>"."<td>السبت</td></tr>";
+                            }
+                            if(isset($days['wed'])){
+                              $wed=$days['wed'];
+                              $content_html=$content_html."<tr><td>".$wed["to"]."</td>"."<td>".$wed["from"]."</td>"."<td>السبت</td></tr>";
+                            }
+                            if(isset($days['thurs'])){
+                              $thurs=$days['thurs'];
+                              $content_html=$content_html."<tr><td>".$thurs["to"]."</td>"."<td>".$thurs["from"]."</td>"."<td>السبت</td></tr>";
+                            }
+                            if(isset($days['fri'])){
+                              $fri=$days['fri'];
+                              $content_html=$content_html."<tr><td>".$fri["to"]."</td>"."<td>".$fri["from"]."</td>"."<td>السبت</td></tr>";
+                            }
+                            $content_html=$content_html."</tbody></table>";
+                            $content_html=$content_html."</td><td style='float:right; text-align:right;'>";
+
+
+                            $content_html=$content_html."<b>التخصص : ".$spec['spec_name']."<br></b>";
+                            $content_html=$content_html."<b>".$spec["side_spec"]. "<br></b>";
+                            $content_html=$content_html."<b>السعر : ".$spec["price"]. "<br></b>";
+
+                            $content_html=$content_html."</td></tr></tbody></table>";
+                            
+                          }
+                        $content_html=$content_html."</div></div></div>";
+                      }
+                      //$li_html=$li_html.'</ul>';
+                      $content_html=$content_html.'</div>';
+                      //echo $li_html;
+                      echo $content_html;
+                    ?>
+                  
+                  
               </div>
             </div>
           </div>
@@ -75,60 +188,12 @@ print'</div>'; */
 <?php
 require_once("../private/footer.html");
 ?>
-<style>
-.personalinfo{
-width:30%; float:right; background-color:white; overflow:hidden; text-align:right;
-border-radius:5px;
-font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
-font-weight: 400;
-font-size:16px;
-font-weight:bold;
-padding:2%;
-}
 
-.personalinfo i{margin-left:16px;}
-
-.personalinfo li{list-style:none; margin-top:3px;}
-
-.meds{ 
-padding:2%;
-float:right;
-border-radius:5px;
-text-align:right;
-width:55%;
-margin-right:5%;
-background-color:white;
-overflow:hidden;
-}
-
-.containerall{width:80%;
-overflow:hidden;
-padding:5%;
-margin:20px auto;
-border-radius:10px;}
-
-.profileimg{
-margin:5px auto;
-width:10%;	
-border: 3px solid #d2d6de;
-border-radius:50%;
-overflow:hidden;
-height:100px;
-}
-
-.fullname:hover{color:#ff0000;}
-
-.fullname{ font-size:30px;
-color:#12ac12;
-text-align:center;
-padding:10px 10px;
-overflow:hidden;
-margin:10px auto;
-}
-</style>
+<link rel="stylesheet" href="/ekshefle/css/profile.css">
 </body>
 <script src="/ekshefle/js/vendor/jquery-1.9.1.min.js"></script>
 <script src="/ekshefle/js/vendor/bootstrap.min.js"></script>
 <script src="/ekshefle/admin/dist/js/app.min.js"></script>
+<script src="/ekshefle/admin/dist/js/demo.js"></script>
 
 </html>

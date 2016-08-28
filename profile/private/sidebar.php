@@ -22,7 +22,7 @@ if(!$loggedin)
             <h5 style="color:#12ac12;"><i class="fa fa-user"></i>  View Profile as Patient</h5>
           </a></li>
 
-          <li><a href="#" data-toggle="tab" style="border:1px solid green; margin:2px;">
+          <li><a href="edit_profile.php" style="border:1px solid green; margin:2px;">
             <h5 style="color:#12ac12"><i class="fa fa-cogs"></i>  Edit Profile</h5>
           </a></li>
           <br>

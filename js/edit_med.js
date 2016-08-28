@@ -253,6 +253,123 @@ function save_days()
     }
 }
 
+function save_lab_days()
+{
+    var days={};
+    var error= document.getElementById("days_error");
+    if(document.getElementById("sat").checked)
+    {
+        var sat_from=document.getElementById("sat_from").value;
+        var sat_to=document.getElementById("sat_to").value;
+        if(sat_from==="")
+            {error.innerHTML="You did't specify the start time on saturdays!"; return false;}
+        else if(sat_to==="")
+            {error.innerHTML="You did't specify the finish time on saturdays!"; return false;}
+        else
+            days.sat={from:sat_from,to:sat_to};
+    }
+    
+    if(document.getElementById("sun").checked)
+    {
+        var sun_from=document.getElementById("sun_from").value;
+        var sun_to=document.getElementById("sun_to").value;
+        if(sun_from==="")
+            {error.innerHTML="You did't specify the start time on sundays!"; return false;}
+        else if(sun_to==="")
+            {error.innerHTML="You did't specify the finish time on sundays!"; return false;}
+        else
+            days.sun={from:sun_from,to:sun_to};
+    }
+
+    if(document.getElementById("mon").checked)
+    {
+        var mon_from=document.getElementById("mon_from").value;
+        var mon_to=document.getElementById("mon_to").value;
+        if(mon_from==="")
+            {error.innerHTML="You did't specify the start time on mondays!"; return false;}
+        else if(mon_to==="")
+            {error.innerHTML="You did't specify the finish time on mondays!"; return false;}
+        else
+            days.mon={from:mon_from,to:mon_to};
+    }
+
+    if(document.getElementById("tues").checked)
+    {
+        var tues_from=document.getElementById("tues_from").value;
+        var tues_to=document.getElementById("tues_to").value;
+        if(tues_from==="")
+            {error.innerHTML="You did't specify the start time on tuesdays!"; return false;}
+        else if(tues_to==="")
+            {error.innerHTML="You did't specify the finish time on tuesdays!"; return false;}
+        else
+            days.tues={from:tues_from,to:tues_to};
+    }
+
+    if(document.getElementById("wed").checked)
+    {
+        var wed_from=document.getElementById("wed_from").value;
+        var wed_to=document.getElementById("wed_to").value;
+        if(wed_from==="")
+            {error.innerHTML="You did't specify the start time on wednesdays!"; return false;}
+        else if(wed_to==="")
+            {error.innerHTML="You did't specify the finish time on wednesdays!"; return false;}
+        else
+            days.wed={from:wed_from,to:wed_to};
+    }
+
+    if(document.getElementById("thurs").checked)
+    {
+        var thurs_from=document.getElementById("thurs_from").value;
+        var thurs_to=document.getElementById("thurs_to").value;
+        if(thurs_from==="")
+            {error.innerHTML="You did't specify the start time on thursdays!"; return false;}
+        else if(thurs_to==="")
+            {error.innerHTML="You did't specify the finish time on thursdays!"; return false;}
+        else
+            days.thurs={from:thurs_from,to:thurs_to};
+    }
+
+    if(document.getElementById("fri").checked)
+    {
+        var fri_from=document.getElementById("fri_from").value;
+        var fri_to=document.getElementById("fri_to").value;
+        if(fri_from==="")
+            {error.innerHTML="You did't specify the start time on fridays!"; return false;}
+        else if(fri_to==="")
+            {error.innerHTML="You did't specify the finish time on fridays!"; return false;}
+        else
+            days.fri={from:fri_from,to:fri_to};
+    }
+
+    if(days==={} || JSON.stringify(days)==="{}")
+        {error.innerHTML="Please choose at least one day!"; return false;}
+    else 
+    {
+        var json_days=JSON.stringify(days);
+        error.innerHTML="";
+        var med_id= document.getElementById("med_id").value;
+
+        $.ajax({
+            type: "POST",
+            url:"http://localhost/ekshefle/profile/operations/edit_lab_days.php",
+            data:{
+                aval_days:json_days,
+                med_id:med_id
+            },
+            success: function(data){
+                if(data!=1)
+                    alert(data);
+                else 
+                {
+                    alert("Days Saved Successfully.");
+                }
+            },
+            error: function(error){
+                alert(data);
+            }
+        });
+    }
+}
 function save_location()
 {
     var error=document.getElementById("loc_error");
@@ -300,7 +417,6 @@ function send_attrib(attrib_name,attrib_value)
     var data={};
     data[attrib_name] = attrib_value;
     data['med_id'] = med_id;
-    var success=true;
     $.ajax({
         type: "POST",
         url:"http://localhost/ekshefle/profile/operations/edit_medical.php",

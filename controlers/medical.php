@@ -103,8 +103,12 @@ function add_medical($doc_email,$med_type,$med_name,$phones,$detailed_add,$area_
     //with for loop through total_spec add sepcialities
     global $db;
     $doc_id= get_doc_id($doc_email);
-    $insert_med_result = $db->query("INSERT into medical (doc_id,med_name,med_type,phones) 
-                                    values($doc_id,'$med_name','$med_type','$phones')");
+    if(!is_active($doc_email,$med_type))
+        $insert_med_result = $db->query("INSERT into medical (doc_id,med_name,med_type,phones) 
+                                        values($doc_id,'$med_name','$med_type','$phones')");
+    else
+        $insert_med_result = $db->query("INSERT into medical (doc_id,med_name,med_type,phones,is_active) 
+                                        values($doc_id,'$med_name','$med_type','$phones',1)");
     if($insert_med_result){
         $med_id=$db->insert_id;
         $insert_address = $db->query("INSERT into address (area_id,detailed_add,med_id) 
@@ -182,6 +186,8 @@ function get_hospital($med_id)
 {
     global $db;
     $med_result =$db->query("SELECT med_name,phones from medical where med_id=$med_id");
+    if(!$med_result)
+        return $db->error;
     $med_info = $med_result->fetch_assoc();
     
     $spec_result =$db->query("SELECT m.spec_id,s.spec_name ,m.aval_days,m.price,m.side_spec 
@@ -207,6 +213,32 @@ function get_hospital($med_id)
     $total_info=array_merge($med_info,$add_info,$location_info);
     $total_info["total_spec"]=$total_spec;
     //med_name , phones , spec_id , aval_days , price , side_spec , area_name , city_name , gov_name
+    //, area_id , city_id , gov_id
+    return $total_info;
+}
+function get_lab($med_id)
+{
+    global $db;
+    $med_result =$db->query("SELECT med_name,phones from medical where med_id=$med_id");
+    $med_info = $med_result->fetch_assoc();
+    
+    $days_result =$db->query("SELECT aval_days from lab_days where med_id=$med_id");
+    $days_info = $days_result->fetch_assoc();
+    
+    $address_result= $db->query("SELECT area_id,detailed_add from address where med_id=$med_id");
+    $add_info = $address_result->fetch_assoc();
+
+    $area_id=$add_info["area_id"];
+
+    $location_result= $db->query("SELECT a.area_name, a.area_id,c.city_name, c.city_id,g.gov_name,g.gov_id
+                                from area as a, city as c, governorate as g
+                                where a.area_id=$area_id
+                                and a.city_id=c.city_id
+                                and c.gov_id=g.gov_id");
+    $location_info=$location_result->fetch_assoc();
+
+    $total_info=array_merge($med_info,$days_info,$add_info,$location_info);
+    //med_name , phones , aval_days  , area_name , city_name , gov_name
     //, area_id , city_id , gov_id
     return $total_info;
 }

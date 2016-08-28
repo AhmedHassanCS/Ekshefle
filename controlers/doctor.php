@@ -156,4 +156,10 @@ function get_Laps($doc_email)
     
     else return false;
 }
+
+function update_doc_attrib($attrib_name,$attrib_val,$doc_email)
+{
+    global $db;
+    return $db->query("UPDATE doctor set $attrib_name='$attrib_val' where doc_email='$doc_email'");
+}
 ?>

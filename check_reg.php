@@ -138,7 +138,9 @@ require_once('private/send_email.php');
                             echo "Database Error: ".$db->error.$birth_date;
                         else {
                                 if(send_email($doc_email,$hash))
+                                {
                                     echo "1";
+                                }
                                 else {
                                     echo "Error sending verification e-mail";
                                     $db->query("DELETE from doctor where doc_email='$doc_email'");
