@@ -53,10 +53,12 @@ if(!$loggedin)
           <div class="nav-collapse collapse pull-right">
               <ul class="nav navbar-nav">
                   <li><a href="/ekshefle/"><h5>Home</h5></a></li>
+                  <li><a href="/ekshefle/reservation.php"><h5>Reservation</h5></a></li>
+                  <!--
                   <li><a href="about-us.html"><h5>About</h5></a></li>
                   <li><a href="services.html"><h5>Services</h5></a></li>
                   <li><a href="contact-us.html"><h5>Contact</h5></a></li>
-                  <li><a href="contact-us.html"><h5>Reservation</h5></a></li>
+                  -->
                   
                   <!-- User Account Menu --><!--.....................................-->
                   <li class="dropdown text-center">

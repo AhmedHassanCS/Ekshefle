@@ -167,7 +167,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a href="#" onclick="load_patients();" data-toggle="tab">Patients</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Admins</a>
+                    <a href="#"></a>
                   </div>
                   <div class="col-xs-4 text-center">
                     <a href="#" onclick="load_doctors();" data-toggle="tab">Doctors</a>

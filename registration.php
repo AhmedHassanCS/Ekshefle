@@ -59,11 +59,11 @@ require_once("private/header.html");
         <div class="form-group">
           <h4>Choose Password</h4>
           <div class="form-group"  id="pw_cont">
-            <input type="password" id="pw" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  onblur="check_pw(); check_cpw();">
+            <input type="password" id="pw" class="form-control" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  onblur="check_pw(); check_cpw();">
             <span class="help-block" id="pw_error"></span>
           </div>
           <div class="form-group"  id="cpw_cont">
-            <input type="password" id="pw_confirm" class="form-control" placeholder="Repeat Password" onblur="check_cpw();">
+            <input type="password" id="pw_confirm" class="form-control" placeholder="Repeat Password" onchange="check_cpw();">
             <span class="help-block" id="cpw_error"></span>
           </div>
         </div>
@@ -91,7 +91,7 @@ require_once("private/header.html");
         <div class="form-group"  id="deg">
           <h4>Current Degree</h4>
           <select id="degree" class="form-control select2">
-              <option></option>
+              <option value=""></option>
               <option>دكتور إمتياز</option>
               <option>دكتور نائب</option>
               <option>مدرس مساعد</option>
@@ -108,7 +108,7 @@ require_once("private/header.html");
         <div class="form-group" id="specialty">
           <h4>Main Specialty</h4>
           <select id="spec" class="form-control select2">
-            <option></option>
+            <option value=""></option>
             <?php
             $spec_sql="SELECT spec_name from specialty";
             $spec_result=$db->query($spec_sql);
@@ -125,7 +125,7 @@ require_once("private/header.html");
         <!--Phone-->
         <div class="form-group" id="ph_cont">
           <h4>Private Phone Number</h4>
-          <input type="text" id="phone" class="form-control" placeholder="01.............">
+          <input type="text" id="phone" class="form-control" placeholder="01............." onblur="check_phone();">
           <span class="help-block" id="ph_error"></span>
         </div>
         <br>
@@ -133,7 +133,7 @@ require_once("private/header.html");
         <!--Address-->
         <div class="form-group" id="address_cont">
           <h4>Home Address بالعربي</h4>
-          <input type="text" id="address" class="form-control" placeholder="المحافظة - المركز أو القرية - المنطقة - الشارع - رقم المنزل" style="width:37%;" onblur("check_address();")>
+          <input type="text" id="address" class="form-control" placeholder="المحافظة - المركز أو القرية - المنطقة - الشارع - رقم المنزل" style="width:37%;" onblur="check_address();">
           <span class="help-block" id="address_error"></span>
         </div>
         <br>
@@ -168,10 +168,13 @@ require_once("/private/footer.html");
 <script src="js/vendor/jquery-1.9.1.min.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="admin/plugins/select2/select2.full.min.js"></script>
-<script src="admin/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script src="admin/plugins/iCheck/icheck.min.js"></script>
+<script src="admin/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="/ekshefle/admin/dist/js/app.min.js"></script>
+
 <script src="js/main.js"></script>
 <script src="js/init.js"></script>
+
 <script src="js/reg_validations.js"></script>
 
 </body>

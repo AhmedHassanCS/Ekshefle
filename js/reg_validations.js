@@ -1,3 +1,9 @@
+function scroll(element)
+{
+$('html, body').animate({
+            scrollTop: $("#"+element).offset().top-200
+        }, 500);
+}
 function check_email()
 {
 	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -9,6 +15,7 @@ function check_email()
 		var user_error= document.getElementById('email_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="email is required";
+		scroll("email");
 		return false;
 	}
 	
@@ -27,6 +34,7 @@ function check_email()
 		var user_error= document.getElementById('email_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="invalid email";
+		scroll("email");
 		return false;
 	}
 }
@@ -41,6 +49,7 @@ function check_fname()
 		var user_error= document.getElementById('fname_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="Name is required";
+		scroll("fname");
 		return false;
 	}
 	
@@ -59,6 +68,7 @@ function check_fname()
 		var user_error= document.getElementById('fname_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="Invalid name: it must be arabic";
+		scroll("fname");
 		return false;
 	}
 	
@@ -74,6 +84,7 @@ function check_sname()
 		var user_error= document.getElementById('sname_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="Name is required";
+		scroll("sname");
 		return false;
 	}
 	
@@ -92,6 +103,7 @@ function check_sname()
 		var user_error= document.getElementById('sname_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="Invalid name: it must be arabic";
+		scroll("sname");
 		return false;
 	}
 	
@@ -107,6 +119,7 @@ function check_lname()
 		var user_error= document.getElementById('lname_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="Name is required";
+		scroll("lname");
 		return false;
 	}
 	
@@ -125,6 +138,7 @@ function check_lname()
 		var user_error= document.getElementById('lname_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="Invalid name: it must be arabic";
+		scroll("lname");
 		return false;
 	}
 	
@@ -141,6 +155,7 @@ function check_pw()
 		var user_error= document.getElementById('pw_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="Password is required";
+		scroll("pw");
 		return false;
 	}
 	
@@ -159,6 +174,7 @@ function check_pw()
 		var user_error= document.getElementById('pw_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="password should be more than 8 characters\nMust contain at least one number, one lowercase and one uppercase letter";
+		scroll("pw");
 		return false;
 	}
 	
@@ -176,6 +192,7 @@ function check_cpw()
 		var user_error= document.getElementById('cpw_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="Password Confirmation is required";
+		scroll("pw_confirm");
 		return false;
 	}
 	
@@ -187,12 +204,13 @@ function check_cpw()
 		user_error.innerHTML="Passwords matching";
 		return true;
 	}
-	else 
+	else
 	{
 		var user_cont= document.getElementById('cpw_cont');
 		var user_error= document.getElementById('cpw_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="Passwords are not matching ";
+		scroll("pw_confirm");
 		return false;
 	}
 		
@@ -218,6 +236,7 @@ function check_gender()
 		var user_error= document.getElementById('gender_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="you should select gender";
+		scroll("gender");
 		return false;		
 	}	
 
@@ -226,7 +245,7 @@ function check_gender()
 function check_degree()
 {
 	var user= document.getElementById('degree');
-	if(user.value != "" || user.value != undefined)
+	if(user.value != "" && user.value != undefined)
 	{
 		var user_cont= document.getElementById('deg');
 		var user_error= document.getElementById('deg_error');
@@ -237,11 +256,11 @@ function check_degree()
 	
 	else
 	{
-		alert("error");
 		var user_cont= document.getElementById('deg');
 		var user_error= document.getElementById('deg_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="you should select degree";
+		scroll("degree");
 		return false;
 	}
 	
@@ -249,22 +268,22 @@ function check_degree()
 
 function check_spec()
 {
-	var user= document.getElementById('spec');
-	if(user.value != "" || user.value !=undefined)
+	var spec= document.getElementById('spec').value;
+	if(spec != "" && spec !=undefined)
 	{
-		var user_cont= document.getElementById('specialty');
-		var user_error= document.getElementById('spec_error');
-		user_cont.className ='form-group has-success';
-		user_error.innerHTML=" ";
+		var spec_cont= document.getElementById('specialty');
+		var spec_error= document.getElementById('spec_error');
+		spec_cont.className ='form-group has-success';
+		spec_error.innerHTML=" ";
 		return true;
 	}
 	else
 	{
-		alert("error");
-		var user_cont= document.getElementById('specialty');
-		var user_error= document.getElementById('spec_error');
-		user_cont.className ='form-group has-error';
-		user_error.innerHTML="you should select specialty";
+		var spec_cont= document.getElementById('specialty');
+		var spec_error= document.getElementById('spec_error');
+		spec_cont.className ='form-group has-error';
+		spec_error.innerHTML="you should select specialty";
+		scroll("spec");
 		return false;
 	}
 	
@@ -280,6 +299,7 @@ function check_phone()
 		var user_error= document.getElementById('ph_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="phone is required";
+		scroll("phone");
 		return false;
 	}
 	
@@ -298,6 +318,7 @@ function check_phone()
 		var user_error= document.getElementById('ph_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="invalid phone";
+		scroll("phone");
 		return false;
 	}
 	
@@ -313,6 +334,7 @@ function check_address()
 		var user_error= document.getElementById('address_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="address is required";
+		scroll("address");
 		return false;
 	}
 	
@@ -331,6 +353,7 @@ function check_address()
 		var user_error= document.getElementById('address_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="invalid address it should be in arabic";
+		scroll("address");
 		return false;
 	}
 	
@@ -345,6 +368,7 @@ function check_birthdate()
 		var user_error= document.getElementById('birth_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="birth-date is required";
+		scroll("datepicker");
 		return false;
 	}
 	
@@ -363,6 +387,7 @@ function check_birthdate()
 		var user_error= document.getElementById('birth_error');
 		user_cont.className ='form-group has-error';
 		user_error.innerHTML="invalid date";
+		scroll("datepicker");
 		return false;
 	}
 	
@@ -379,22 +404,23 @@ function submit()
 	    $.ajax({
 	        type: "POST",
 	        url:"http://localhost/ekshefle/check_reg.php",
-	        data:{doc_email: document.getElementById("email").value,
-	              doc_fname: document.getElementById("fname").value,
-	              doc_sname: document.getElementById("sname").value,
-	              doc_lname: document.getElementById("lname").value,
-	              doc_nick: document.getElementById("nickname").value,
-	              doc_pw: document.getElementById("pw").value,
-	              doc_pw_confirm: document.getElementById("pw_confirm").value,
-	              gender: gender,
-	              degree: document.getElementById("degree").value,
-	              doc_phone: document.getElementById("phone").value,
-	              birth_date: document.getElementById('datepicker').value,
-	              doc_address: document.getElementById("address").value,
-	              bio: document.getElementById("bio").value,
-	              side_spec: document.getElementById("side_spec").value,
-	              specialty :document.getElementById("spec").value
-	              },
+	        data:{
+	        	doc_email: document.getElementById("email").value,
+	            doc_fname: document.getElementById("fname").value,
+	            doc_sname: document.getElementById("sname").value,
+	            doc_lname: document.getElementById("lname").value,
+	            doc_nick: document.getElementById("nickname").value,
+	            doc_pw: document.getElementById("pw").value,
+	            doc_pw_confirm: document.getElementById("pw_confirm").value,
+	            gender: gender,
+	            degree: document.getElementById("degree").value,
+	            doc_phone: document.getElementById("phone").value,
+	            birth_date: document.getElementById('datepicker').value,
+	            doc_address: document.getElementById("address").value,
+	            bio: document.getElementById("bio").value,
+	            side_spec: document.getElementById("side_spec").value,
+	            specialty :document.getElementById("spec").value
+	            },
 	        success: function(data){
 	                  if(data!="1")
 	                    alert(data);

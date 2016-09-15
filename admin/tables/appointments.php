@@ -58,7 +58,7 @@ require_once("../session.php");
                   </thead>
                   <tbody>
                     <?php
-                          $apps_query= "SELECT app.app_id, p.nat_id, p.pat_name ,m.med_id ,m.med_name, m.med_type, app.time_date,
+                          $apps_query= "SELECT app.app_id, p.nat_id, p.pat_name ,m.med_id ,m.med_name, m.med_type, app.date,
                           m.phones, d.doc_email, d.doc_fname, d.doc_sname ,d.doc_lname ,s.spec_name
                           FROM patient as p, medical as m, appointment as app, doctor as d, med_spec as ms, specialty as s
                           WHERE app.confirmed=0
@@ -81,10 +81,10 @@ require_once("../session.php");
                                     <td>".$row["med_name"]."</td>
                                     <td>".$row["med_type"]."</td>
                                     <td>".$row["phones"]."</td>
-                                    <td>".$row["time_date"]."</td>
+                                    <td>".$row["date"]."</td>
                                     <td>".$row["spec_name"]."</td>
                                     <td><input class='btn btn-success btn-xs' type='button' data-toggle='modal' data-target='#confirm_div' value='Confirm' 
-                                          onclick='confirm(\"".$row["app_id"]."\",\"".$row["nat_id"]."\",\"".$row["med_id"]."\",\"".$row["time_date"]."\")'/>
+                                          onclick='confirm(\"".$row["app_id"]."\",\"".$row["nat_id"]."\",\"".$row["med_id"]."\",\"".$row["date"]."\")'/>
                                         <input class='btn btn-danger btn-xs' type='button' value='Cancel' data-toggle='modal' data-target='#cancel_div' 
                                           onclick='cancel(\"".$row["app_id"]."\",\"".$row["nat_id"]."\",\"".$row["med_id"]."\")'/></td>
                                     </tr>";
@@ -116,7 +116,7 @@ require_once("../session.php");
               <h5>Medical ID:</h5>  
               <label id="conf_med_id"></label> 
               <h5>Date & Time:</h5>  
-              <input type="text" id="conf_date_time" name="real_date"/> 
+              <input type="date" id="conf_date_time" name="real_date"/> 
           </div> 
               
           <div class="modal-footer">  

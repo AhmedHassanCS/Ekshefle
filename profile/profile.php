@@ -3,34 +3,47 @@
 require_once("../private/session.php");
 require_once("../controlers/doctor.php");
 require_once("../controlers/medical.php");
-if(!$loggedin)
-	header("location: /ekshefle/");
 
-$doc_email=$_SESSION['loggedin_user'];
+if(!isset($_GET['doc_email']))
+  header("location: /ekshefle/");
+if($loggedin)
+  require_once("private/header.php");
+else require_once("../private/header.html");  
+$doc_email=mysqli_real_escape_string($db,$_GET['doc_email']);
 $doc_id= get_doc_id($doc_email);
 
-require_once("private/header.php");
+
 ?>
 
 <div class="containerall">
-<div class="profileimg" ><label>
-  <?php print "<img src='/ekshefle/images/profile_pics/".$doc_email.".jpg' width='100%' height='100%'/>"; ?>
-</label></div>
-<label>
+
+  <?php 
+    $file_jpg=$_SERVER['DOCUMENT_ROOT'] .'/ekshefle/images/profile_pics/'.$doc_email.'.jpg';
+    $file_png=$_SERVER['DOCUMENT_ROOT'] .'/ekshefle/images/profile_pics/'.$doc_email.'.png';
+
+    if(file_exists($file_jpg))
+      echo '<img class="profileimg" src="/ekshefle/images/profile_pics/'.$doc_email.'.jpg" data-toggle="modal" data-target="#view_full_img">';
+    elseif(file_exists($file_png))
+      echo '<img class="profileimg" src="/ekshefle/images/profile_pics/'.$doc_email.'.png" data-toggle="modal" data-target="#view_full_img">';
+    else
+      echo '<img class="profileimg" src="/ekshefle/images/profile_pics/default.png" data-toggle="modal" data-target="#view_full_img">';
+
+  ?>
 <div class="fullname" >
 <?php echo get_doc_fname($doc_email)." ".get_doc_sname($doc_email)." ".get_doc_lname($doc_email); ?>
-</div></label>
+</div>
+
 
 <div class="box box-success personalinfo" >
 <ul>
 <li><?php echo get_degree($doc_email);?><i class="fa fa-user-md" aria-hidden="true"></i></li>
 <li><?php echo get_spec($doc_email);?><i class="fa fa-stethoscope" aria-hidden="true"></i></li>
-<li><?php echo get_doc_address($doc_email);?><i class="fa fa-home" aria-hidden="true"></i></li>
+<li> <?php echo get_doc_address($doc_email);?><i class="fa fa-home" aria-hidden="true"></i></li>
 <li> <?php echo get_doc_phone($doc_email);?><i class="fa fa-phone" aria-hidden="true"></i></li>
 <li> <?php echo $doc_email;?> <i class="fa fa-envelope" aria-hidden="true"></i></li>
 </ul>
 </div>
-<div id="meds" class="box box-solid box-success meds">
+<div id="meds" class="box box-success meds">
 <div class="col-md-6">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs pull-right">
@@ -38,7 +51,7 @@ require_once("private/header.php");
               <li class=""><a href="#tab_2-2" data-toggle="tab" aria-expanded="false">مستشفيات</a></li>        
             </ul>
 
-            <div class="tab-content">
+            <div class="tab-content" style="width:100%">
               <div class="tab-pane active" id="tab_1-1">
 
                   <?php
@@ -179,6 +192,30 @@ require_once("private/header.php");
 </div>
 </div>
 
+<div id="view_full_img" class="modal fade" style="display: none;"> 
+  <div class="modal-dialog">
+    <div class="modal-content"> 
+
+      <div class="modal-header">  
+        <a class="close" data-dismiss="modal" style="color:#fff;">×</a>  
+      </div>
+      <div class="modal-body">
+        <?php
+          if(file_exists($file_jpg))
+            echo '<img style="display: block; margin-left:auto; margin-right: auto; width:220px; height:auto;"
+             src="/ekshefle/images/profile_pics/'.$doc_email.'.jpg">';
+          elseif(file_exists($file_png))
+            echo '<img style="display: block; margin-left:auto; margin-right: auto; width:220px; height:auto;"
+             src="/ekshefle/images/profile_pics/'.$doc_email.'.png">';
+          else
+            echo '<img style="display: block; margin-left:auto; margin-right: auto; width:220px; height:auto;"
+             src="/ekshefle/images/profile_pics/default.png">';
+        ?>
+      </div> 
+    </div>
+  </div>                          
+</div>
+
 <?php
 /* print '<div id="siding">';
 require_once("/private/sidebar.php");
@@ -191,6 +228,10 @@ require_once("../private/footer.html");
 
 <link rel="stylesheet" href="/ekshefle/css/profile.css">
 </body>
+
+<script>
+document.domain = <?php echo '"localhost"'; ?>;
+</script>
 <script src="/ekshefle/js/vendor/jquery-1.9.1.min.js"></script>
 <script src="/ekshefle/js/vendor/bootstrap.min.js"></script>
 <script src="/ekshefle/admin/dist/js/app.min.js"></script>

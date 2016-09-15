@@ -18,7 +18,7 @@ if(!$loggedin)
           </a></li>
           <br>
 
-          <li><a href="profile.php" style="border:1px solid green; margin:2px;">
+          <li><a href="profile.php?doc_email=<?php echo $_SESSION['loggedin_user'];?>" style="border:1px solid green; margin:2px;">
             <h5 style="color:#12ac12;"><i class="fa fa-user"></i>  View Profile as Patient</h5>
           </a></li>
 

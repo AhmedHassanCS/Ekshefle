@@ -2,6 +2,13 @@ var error_str="";
 
 function clinic_submit()
 {
+    document.getElementById("clinic_name").style="";
+    document.getElementById("specialty").style="";
+    document.getElementById("phones").style="";
+    document.getElementById("address").style="";
+    document.getElementById("gov").style="";
+    document.getElementById("price").style="";
+
     var valid= false;
     var error = document.getElementById("error");
     var clinic_name = document.getElementById("clinic_name").value;
@@ -15,62 +22,97 @@ function clinic_submit()
     var days={};
     var side_spec="";
 
-    if(clinic_name==="" || clinic_name==null)
+    if(clinic_name==="" || clinic_name==null){
         error.innerHTML="Clinic Name is required, please fill it!";
-    else if(!/^[ء-ي1-9٠-٩_ ]+$/.test(clinic_name))
+        document.getElementById("clinic_name").style="border:solid red;";
+    }
+    else if(!/^[ء-ي1-9٠-٩_ ]+$/.test(clinic_name)){
         error.innerHTML="Invalid Clinic name!<br>It must contain only Arabic characters, numbers, spaces and under scores";
+        document.getElementById("clinic_name").style="border:solid red;";
 
-    else if(specialty==="" || specialty==null)
+    }
+    else if(specialty==="" || specialty==null){
         error.innerHTML="Specialty is required please choose it!";
-
-    else if(phones==="" || phones==null)
+        document.getElementById("specialty").style="border:solid red;";
+    }
+    else if(phones==="" || phones==null){
         error.innerHTML="Add at least one phone for the clinic";
-    else if(!/^[0-9٠-٩, ]+$/.test(phones))
+        document.getElementById("phones").style="border:solid red;";
+    }
+    else if(!/^[0-9٠-٩, ]+$/.test(phones)){
         error.innerHTML="Invalid Phone! check your phones again.";
-
-    else if(address==="" || address==null)
+        document.getElementById("phones").style="border:solid red;";
+    }
+    else if(address==="" || address==null){
         error.innerHTML="Clinic's address is required, please fill it!";
-    else if(!/^[ء-ي0-9٠-٩-, ]+$/.test(address))
+        document.getElementById("address").style="border:solid red;";
+    }
+    else if(!/^[ء-ي0-9٠-٩-, ]+$/.test(address)){
         error.innerHTML="Address must be in Arabic.";
-
-    else if( !(days= get_days(error)) )
-        return;       
-    else if(price==="" || price==null)
+        document.getElementById("address").style="border:solid red;";
+    }
+    else if( !(days= get_days(error)) ){
+        return;
+    }
+    else if(price==="" || price==null){
         error.innerHTML="Price is required, please fill it!";
+        document.getElementById("price").style="border:solid red;";
+    }
     else if(!/^[0-9٠-٩.]+$/.test(price))
+    {
         error.innerHTML="Price is only numbers.";
+        document.getElementById("price").style="border:solid red;";
+    }
 
     //location check
-    else if(gov_name=="" || gov_name==null)
+    else if(gov_name=="" || gov_name==null){
         error.innerHTML="Please choose governorate!";
+        document.getElementById("gov").style="border:solid red;";
+    }
     else{
             //get city
             if(document.getElementById("other_city_check").checked)
             {
                 var other_city= document.getElementById("other_city").value;
                 if(other_city==="" || other_city == null)
-                    {error.innerHTML="You choose to enter other city but you didn't!"; return;}
+                    {
+                        error.innerHTML="You chose to enter other city but you didn't!";
+                        document.getElementById("other_city").style="border:solid red;";
+                        return;
+                    }
                 else city_name=other_city;
             }
             else 
             {
                 city_name =document.getElementById("city").value;
                 if(city_name==="" || city_name == null)
-                {error.innerHTML= "Please choose city or insert new city!"; return;}         
+                {
+                    error.innerHTML= "Please choose city or insert new city!"; 
+                    document.getElementById("city").style="border:solid red;";
+                    return;
+                }         
             }
             //get area
             if(document.getElementById("other_area_check").checked)
             {
                 var other_area= document.getElementById("other_area").value;
                 if(other_area==="" || other_area == null)
-                    {error.innerHTML="You choose to enter other area but you didn't!"; return;}
+                    {
+                        error.innerHTML="You choose to enter other area but you didn't!";
+                        document.getElementById("other_area").style="border:solid red;";
+                        return;
+                     }
                 else {area_name=other_area; valid=true;}
             }
             else 
             {
                 area_name =document.getElementById("area").value;
                 if(area_name==="" || area_name == null)
-                {error.innerHTML= "Please choose area or insert new area!"; return;} 
+                {
+                    error.innerHTML= "Please choose area or insert new area!"; 
+                    document.getElementById("area").style="border:solid red;";
+                    return;
+                } 
                 else valid=true;        
             }
 
@@ -366,6 +408,12 @@ $('#add_spec_div').on('hidden.bs.modal', function (e) {
 });
 function submit_hospital()
 {
+    document.getElementById("hospital_name").style="";
+    document.getElementById("phones").style="";
+    document.getElementById("address").style="";
+    document.getElementById("gov").style="";
+    
+
     var error = document.getElementById("error");
     var hospital_name = document.getElementById("hospital_name").value;
     var phones = document.getElementById("phones").value;
@@ -374,22 +422,42 @@ function submit_hospital()
     var valid=false;
 
     if(hospital_name==="" || hospital_name==null)
+    {
         error.innerHTML="Hospital Name is required, please fill it!";
+        document.getElementById("hospital_name").style="border:solid red;";
+    }
     else if(!/^[ء-ي1-9٠-٩_ ]+$/.test(hospital_name))
+    {
         error.innerHTML="Invalid hospital name!<br>It must contain only Arabic characters, numbers, spaces and under scores";
-
+        document.getElementById("hospital_name").style="border:solid red;";
+    }
     else if(phones==="" || phones==null)
+    {
         error.innerHTML="Add at least one phone for the hospital";
+        document.getElementById("phones").style="border:solid red;";
+    }
     else if(!/^[0-9٠-٩, ]+$/.test(phones))
+    {
         error.innerHTML="Invalid Phone! check your phones again.";
+        document.getElementById("phones").style="border:solid red;";
+    }
 
     else if(address==="" || address==null)
+    {
         error.innerHTML="Clinic's address is required, please fill it!";
+        document.getElementById("address").style="border:solid red;";
+    }
     else if(!/^[ء-ي0-9٠-٩-, ]+$/.test(address))
+    {
         error.innerHTML="Address must be in Arabic.";
+        document.getElementById("address").style="border:solid red;";
+    }
     
     else if(gov_name=="" || gov_name==null)
+    {
         error.innerHTML="Please choose governorate!";
+        document.getElementById("gov").style="border:solid red;";
+    }
     
     else if(num_of_spec<=0)
         error.innerHTML="Add at least one Specialty!";
@@ -399,28 +467,44 @@ function submit_hospital()
             {
                 var other_city= document.getElementById("other_city").value;
                 if(other_city==="" || other_city == null)
-                    {error.innerHTML="You choose to enter other city but you didn't!"; return;}
+                    {
+                        error.innerHTML="You choose to enter other city but you didn't!";
+                        document.getElementById("other_city").style="border:solid red;";
+                        return;
+                    }
                 else city_name=other_city;
             }
             else 
             {
                 city_name =document.getElementById("city").value;
                 if(city_name==="" || city_name == null)
-                {error.innerHTML= "Please choose city or insert new city!"; return;}         
+                {
+                    error.innerHTML= "Please choose city or insert new city!";
+                    document.getElementById("city").style="border:solid red;";
+                    return;
+                }         
             }
             //get area
             if(document.getElementById("other_area_check").checked)
             {
                 var other_area= document.getElementById("other_area").value;
                 if(other_area==="" || other_area == null)
-                    {error.innerHTML="You choose to enter other area but you didn't!"; return;}
+                    {
+                        error.innerHTML="You choose to enter other area but you didn't!";
+                        document.getElementById("other_area").style="border:solid red;";
+                        return;
+                    }
                 else {area_name=other_area; valid=true;}
             }
             else 
             {
                 area_name =document.getElementById("area").value;
                 if(area_name==="" || area_name == null)
-                {error.innerHTML= "Please choose area or insert new area!"; return;} 
+                {
+                    error.innerHTML= "Please choose area or insert new area!"; 
+                    document.getElementById("area").style="border:solid red;";
+                    return;
+                } 
                 else valid=true;        
             }
 

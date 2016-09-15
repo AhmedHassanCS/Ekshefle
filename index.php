@@ -20,7 +20,8 @@ else
                         <img class="pull-right" src="images/sample/slider/img1.png" alt=""/>
                         <h2 style="color:#000;">هنا ستجد ضالتك</h2>
                         <h3 class="gap" style="color:#000;">يمكنك البحث بواسطة المكان والتخصص وإسم الدكتور وسعر الكشف</h3>
-                        <button type="button" class="btn btn-large" style="color:#000; border:2px solid black;" href="#">إحجز الأن</button>
+                        <br><br>
+                        <a type="button" class="btn btn-large" style="color:#000; border:2px solid black;" href="/ekshefle/reservation.php">إحجز الأن</a>
                     </div>
                 </div>
             </div>
@@ -33,7 +34,8 @@ else
                         <img class="pull-right" src="images/sample/slider/img2.png" alt="" />
                         <h2>لا تنتظر من يدلك ولا تسأل عن الطريق</h2>
                         <h3 class="gap">سنحجز لك أينما كنت</h3>
-                        <a class="btn btn-large btn-transparent" href="#">إحجز الأن</a>
+
+                        <a class="btn btn-large btn-transparent" href="/ekshefle/reservation.php">إحجز الأن</a>
                     </div>
                 </div>
             </div>
@@ -46,7 +48,8 @@ else
                     <img class="pull-right" src="images/sample/slider/heart_rate.gif" alt="" />
                     <h2 style="color:#000;">صحتك تهمنا</h2>
                     <h3 class="gap" style="color:#000;">سنصلك للطبيب المناسب</h3>
-                    <button type="button" class="btn btn-large" style="color:#000; border:2px solid black;" href="#">إحجز الأن</button>
+                    <br><br>
+                    <a type="button" class="btn btn-large" style="color:#000; border:2px solid black;" href="/ekshefle/reservation.php">إحجز الأن</a>
                 </div>
             </div>
         </div>

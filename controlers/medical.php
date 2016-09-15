@@ -1,8 +1,5 @@
 <?php
 
-if(!$loggedin)
-  header("location: /ekshefle/");
-
 require_once("doctor.php");
 function count_doc_med($doc_email,$med_type)
 {
@@ -327,7 +324,8 @@ function get_med_location($med_id)
 }
 
 function get_med_side_spec_price($med_id){
-        global $db; $arr=array();
+        global $db; 
+        $arr=array();
     $result=$db->query("SELECT side_spec,price from med_spec where med_id='$med_id'");
 
     if(mysqli_num_rows($result)==1)
@@ -339,5 +337,16 @@ function get_med_side_spec_price($med_id){
     else return false;
     return $arr;
     
+}
+function get_days($med_id,$spec_id)
+{
+    global $db;
+    $result=$db->query("SELECT aval_days from med_spec where med_id=$med_id and spec_id='$spec_id'");
+    if($result && mysqli_num_rows($result)==1)
+    {
+        $spec=$result->fetch_assoc();
+        return $spec["aval_days"];
+    }
+    else exit("ERROR");
 }
 ?>

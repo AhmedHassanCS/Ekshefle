@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="/ekshefle/admin/plugins/datepicker/datepicker3.css">
     <link rel="stylesheet" href="/ekshefle/admin/plugins/iCheck/all.css">
     <link rel="stylesheet" href="/ekshefle/admin/plugins/select2/select2.min.css">
+    <link rel="stylesheet" href="/ekshefle/admin/plugins/pace/pace.min.css">    
 
 
     <script src="/ekshefle/js/login.js"></script>
@@ -34,51 +35,52 @@
 </head>
 
 <body>
-    <!--  Login form -->
-    <div class="modal hide fade in" style="background:#fff;" id="loginForm" aria-hidden="false">
-        <div class="modal-header">
-            <i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
-            <h4>Login Form</h4>
-        </div>
-        <!--Modal Body-->
-        <div class="modal-body">
-            <div class="form-group">
-                <input type="text" class="input-small" name="email" id="login_email" placeholder="Email">
-                <input type="password" class="input-small" name="pw" id="login_pw" placeholder="Password">
-                <button type="submit" class="btn btn-success" onclick="login();">Sign in</button>
-                <span class="help-block" id="login_error" style="color:red"></span>
-                <a href="#">Forgot your password?</a>
-            </div>
-        </div>
-        <!--/Modal Body-->
+<!--  Login form -->
+<div class="modal hide fade in" style="background:#fff;" id="loginForm" aria-hidden="false">
+    <div class="modal-header">
+        <i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+        <h4>Login Form</h4>
     </div>
-    <!--  /Login form -->
-    <!--Header-->
-
-    <header class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-                <a id="logo" class="pull-left" style="background:url(images/logo-ar.png) no-repeat 0 50%;" href="/ekshefle/"></a>
-                <div class="nav-collapse collapse pull-right">
-                    <ul class="nav">
-                        <li><a href="/ekshefle/"><h4>رئيسية</h4></a></li>
-                        <li><a href="#"><h4>معلومات</h4></a></li>
-                        <li><a href="#"><h4>خدمات</h4></a></li>
-                        <li><a href="#"><h4>تواصل معنا</h4></a></li>
-                        <li><a href="#"><h4>إحجز الأن</h4></a></li>
-                        <li class="login">
-                        <a data-toggle="modal" href="#loginForm">Doctor > Login</a>
-                        
-                        </li>
-                        <li><a href="registration.php">Doctor > Register</a></li>
-                    </ul>        
-                </div><!--/.nav-collapse -->
-            </div>
+    <!--Modal Body-->
+    <div class="modal-body">
+        <div class="form-group">
+            <input type="text" class="input-small" name="email" id="login_email" placeholder="Email">
+            <input type="password" class="input-small" name="pw" id="login_pw" placeholder="Password">
+            <button type="submit" class="btn btn-success" onclick="login();">Sign in</button>
+            <span class="help-block" id="login_error" style="color:red"></span>
+            <a href="#">Forgot your password?</a>
         </div>
-    </header>
-    <!-- /header -->
+    </div>
+    <!--/Modal Body-->
+</div>
+<!--  /Login form -->
+<!--Header-->
+<header class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a id="logo" class="pull-left" style="background:url(images/logo-ar.png) no-repeat 0 50%;" href="/ekshefle/"></a>
+            <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                    <li><a href="/ekshefle/"><h4>رئيسية</h4></a></li>
+                    <li><a href="/ekshefle/reservation.php"><h4>إحجز الأن</h4></a></li>
+                    <!--
+                    <li><a href="#"><h4>معلومات</h4></a></li>
+                    <li><a href="#"><h4>خدمات</h4></a></li>
+                    <li><a href="#"><h4>تواصل معنا</h4></a></li>
+                    -->
+                    <li class="login">
+                    <a data-toggle="modal" href="#loginForm">Doctor > Login</a>
+                    
+                    </li>
+                    <li><a href="registration.php">Doctor > Register</a></li>
+                </ul>        
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</header>
+<!-- /header -->

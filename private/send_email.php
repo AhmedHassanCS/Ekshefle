@@ -12,7 +12,7 @@ function send_email($email,$hash)
      
     "; 
                          
-    $headers = 'From:engineer.ahmed.94@gmail.com' . "\r\n";
+    $headers = 'From:noreply@gmail.com' . "\r\n";
     return mail($email, $subject, $message, $headers); // Send our email
 }
 ?>
